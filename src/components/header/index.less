@@ -9,32 +9,70 @@
   .header-logo{
     text-align: center;
   }
-  .header-nav{
-    border: 0;
-    font-size: 18px;
-    font-variant: tabular-nums;
+  .header-right{
+    display: flex;
+    align-items: center;
+    .header-nav{
+      border: 0;
+      font-size: 18px;
+      font-variant: tabular-nums;
+    }
+    .header-nav.ant-menu-horizontal {
+      border-bottom: none;
+    }
+    .header-nav.ant-menu-horizontal > .ant-menu-item {
+      height: 64px;
+      line-height: 60px;
+      min-width: 72px;
+      border-top: 2px solid transparent;
+    }
+    .header-nav.ant-menu-horizontal > .ant-menu-item:hover {
+      border-top: 2px solid #1890ff;
+      border-bottom: 2px solid transparent;
+    }
+    .header-nav.ant-menu-horizontal > .ant-menu-item-selected {
+      border-top: 2px solid #1890ff;
+      border-bottom: 2px solid transparent;
+    }
+    .header-nav.ant-menu-horizontal > .ant-menu-item-selected a {
+      color: #1890ff;
+    }
+    .header-nav > .ant-menu-item {
+      text-align: center;
+    }
   }
-  .header-nav.ant-menu-horizontal {
-    border-bottom: none;
+
+  #header-search{
+    position:relative;
+    .search{
+      width: 160px;
+      height: 38px;
+      padding: 0 30px 0 20px;
+      margin-top: 9px;
+      margin-left: 20px;
+      box-sizing: border-box;
+      border: none;
+      outline: none;
+      border-radius: 19px;
+      background: #eee;
+      font-size: 14px;
+      color: #666;
+      &::placeholder {
+        color: #999;
+      }
+    }
+    .icon-search{
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+    }
   }
-  .header-nav.ant-menu-horizontal > .ant-menu-item {
-    height: 64px;
-    line-height: 60px;
-    min-width: 72px;
-    border-top: 2px solid transparent;
-  }
-  .header-nav.ant-menu-horizontal > .ant-menu-item:hover {
-    border-top: 2px solid #1890ff;
-    border-bottom: 2px solid transparent;
-  }
-  .header-nav.ant-menu-horizontal > .ant-menu-item-selected {
-    border-top: 2px solid #1890ff;
-    border-bottom: 2px solid transparent;
-  }
-  .header-nav.ant-menu-horizontal > .ant-menu-item-selected a {
-    color: #1890ff;
-  }
-  .header-nav > .ant-menu-item {
-    text-align: center;
+  #user-info{
+    margin-left: 100px;
+    .login{
+      display: inline-block;
+      margin-right: 50px;
+    }
   }
 }

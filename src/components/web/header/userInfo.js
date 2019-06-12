@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Row, Col } from 'antd'
+import { Button } from 'antd'
 
 class UserInfo extends Component{
 
@@ -7,7 +7,7 @@ class UserInfo extends Component{
         return(
             <div id="user-info">
                 <div className="login">
-                        <Button type="primary" icon="idcard">登录</Button>
+                        <Button type="primary" icon="login">登录</Button>
                 </div>
                 <Button type="danger" ghost>注册</Button>
             </div>

@@ -6,18 +6,30 @@
   position: relative;
   z-index: 10;
   max-width: 100%;
+
   .header-logo{
     text-align: center;
+    width: 100%;
+    .nav-phone-icon {
+      display: none;
+    }
   }
   .header-right{
     display: flex;
+    justify-content: flex-end;
+  }
+  .header-content{
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+
     .header-nav{
       border: 0;
       font-size: 18px;
       font-variant: tabular-nums;
     }
-    .header-nav.ant-menu-horizontal {
+
+    .header-nav.ant-menu-vertical {
       border-bottom: none;
     }
     .header-nav.ant-menu-horizontal > .ant-menu-item {
@@ -40,39 +52,57 @@
     .header-nav > .ant-menu-item {
       text-align: center;
     }
-  }
 
-  #header-search{
-    position:relative;
-    .search{
-      width: 160px;
-      height: 38px;
-      padding: 0 30px 0 20px;
-      margin-top: 9px;
-      margin-left: 20px;
-      box-sizing: border-box;
-      border: none;
-      outline: none;
-      border-radius: 19px;
-      background: #eee;
-      font-size: 14px;
-      color: #666;
-      &::placeholder {
-        color: #999;
+    #header-search{
+      position:relative;
+      .search{
+        width: 160px;
+        height: 38px;
+        padding: 0 30px 0 20px;
+        margin-top: 9px;
+        margin-left: 20px;
+        box-sizing: border-box;
+        border: none;
+        outline: none;
+        border-radius: 19px;
+        background: #eee;
+        font-size: 14px;
+        color: #666;
+        &::placeholder {
+          color: #999;
+        }
+      }
+      .icon-search{
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
       }
     }
-    .icon-search{
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      transform: translateY(-50%);
+  }
+  @media screen and (max-width: 989px) {
+    #header-search {
+      display: none;
     }
   }
+  @media only screen and (max-width: 576px) {
+    .header-logo .nav-phone-icon {
+      display: block;
+      position: absolute;
+      font-size: 14px;
+      left: 30px;
+      top: 25px;
+      width: 16px;
+      height: 22px;
+      z-index: 1;
+    }
+  }
+
   #user-info{
-    margin-left: 100px;
+    padding: 0 40px 0 16px;
     .login{
       display: inline-block;
-      margin-right: 50px;
+      margin-right: 20px;
     }
   }
 }

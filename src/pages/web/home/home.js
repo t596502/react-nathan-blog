@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Headernav from '../../components/header/index.js'
-import Sider from '../../components/sider'
+import Headernav from '../../../components/web/header/index.js'
+import Sider from '../../../components/web/sider'
 import { Layout,Row,Col,Icon,Tags,Divider } from 'antd';
 import Article from '../article/article'
 import './index.less'
@@ -13,22 +13,23 @@ const list = [{
     title: "[转] JavaScript深入之闭包",
     updatedAt: "2019-02-11 14:00:44"
 }]
+const responsiveContent = {xxl: 16, xl:16, lg: 16,md:24, sm: 24, xs: 24};
+const responsiveArticle = {xxl: 6, xl: 6, lg: 6, md:0,sm: 0, xs: 0 };
+// const gutter = { xxl: 2, xl:2, lg: 16,md:16, sm: 0, xs: 0}
 class Home extends Component{
 
     render() {
         return(
-            <div>
+            <Layout className="app-container">
                 <Headernav />
-                <Row>
-                    <Col push={1} span={15}  className="content-inner-wrapper home">
+                <Row type='flex' justify='space-around'>
+                    <Col {...responsiveContent}  className="content-inner-wrapper home">
                         <ul className="ul-list">
                             {list.map(item => (
                                 <li key={item.id} className="ul-list-item">
                                     <Divider orientation="left">
-                    <span className="title" onClick={() => this.jumpTo(item.id)}>
-                      {item.title}
-                    </span>
-                                        <span className="create-time">{item.createdAt.slice(0, 10)}</span>
+                                        <span className="title" onClick={() => this.jumpTo(item.id)}>{item.title}</span>
+                                        {/*<span className="create-time">{item.createdAt.slice(0, 10)}</span>*/}
                                     </Divider>
 
                                     <div
@@ -47,12 +48,11 @@ class Home extends Component{
                             ))}
                         </ul>
                     </Col>
-                    <Col push={2} span={7}>
+                    <Col {...responsiveArticle}>
                         <Sider></Sider>
                     </Col>
-
                 </Row>
-            </div>
+            </Layout>
         )
     }
 }

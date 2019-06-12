@@ -32,13 +32,13 @@ class BolgSider extends Component {
           </li>
         </ul>
 
-        <Divider orientation="left">最近文章</Divider>
+        <Divider>最近文章</Divider>
         <ul className="recent-list">
             <li>
               dsadada
             </li>
         </ul>
-        <Divider orientation="left">标签</Divider>
+        <Divider>标签</Divider>
         <div className="tags-content">
             {/*<Tag color={colorList[i] ? colorList[i] : colorList[random(colorList)]}>*/}
 

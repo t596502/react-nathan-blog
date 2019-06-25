@@ -19,7 +19,7 @@ class headerLogo extends Component{
     render(){
         return(
             <div className="header-logo">
-                Nathan的博客
+                <Link to='/' replace >Nathan的博客</Link>
                 <Icon type="menu-o" className="nav-phone-icon" onClick={this.showDrawer} />
                 <Drawer
                     title="Nathan的博客"

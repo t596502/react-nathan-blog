@@ -12,7 +12,7 @@ export default (state = defaultState,action)=>{
     switch (action.type) {
         case CONSTANTS.USER_LOGIN:
             const {username,auth} = action.payload;
-            return {...state,username,auth}
+            return {...state,username,auth};
         default:
             return state
     }

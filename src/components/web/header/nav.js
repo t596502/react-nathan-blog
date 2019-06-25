@@ -17,7 +17,8 @@ class Nav extends Component {
                     {navList.map((item)=>(
                     <Menu.Item key={item.link}>
                         <Link to={item.link}>
-                            {item.icon && <Icon type={item.icon} style={{fontSize:'18px'}}/>}{item.title}
+                            {item.icon && <Icon type={item.icon} style={{fontSize:'16px'}}/>}
+                            {item.title}
                         </Link>
                     </Menu.Item>
                     ))}
@@ -28,7 +29,7 @@ class Nav extends Component {
 }
 Nav.propTypes ={
     mode:PropTypes.string
-}
+};
 // vertical
 Nav.defaultProps = {
     mode: 'horizontal'

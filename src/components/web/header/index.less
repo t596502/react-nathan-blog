@@ -3,12 +3,15 @@
   background: #fff;
   -webkit-box-shadow: 0 2px 8px #f0f1f2;
   box-shadow: 0 2px 8px #f0f1f2;
-  position: relative;
+  //position: relative;
   z-index: 10;
   max-width: 100%;
-
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   .header-logo{
-    text-align: center;
+    //text-align: center;
     width: 100%;
     .nav-phone-icon {
       display: none;
@@ -25,7 +28,7 @@
 
     .header-nav{
       border: 0;
-      font-size: 18px;
+      font-size: 16px;
       font-variant: tabular-nums;
     }
 
@@ -96,10 +99,13 @@
       height: 22px;
       z-index: 1;
     }
+    .header-logo{
+      text-align: center;
+    }
   }
 
   #user-info{
-    padding: 0 40px 0 16px;
+    padding: 0 0px 0 16px;
     .login{
       display: inline-block;
       margin-right: 20px;

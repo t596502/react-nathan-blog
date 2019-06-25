@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {message} from 'antd'
+import {message,Spin} from 'antd'
 import store from 'store'
 import { Base64 } from 'js-base64';
 
@@ -51,7 +51,7 @@ instance.interceptors.response.use(
                         break
                     case 500:
                         message.error('服务器出问题了，请稍后再试！')
-                        break
+                        break;
                     default:
                         message.error(`连接错误 ${err.response.status}！`)
                         break

@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
-import Headernav from '../../../components/web/header/index.js'
+import {withRouter} from 'react-router-dom'
 import Sider from '../../../components/web/sider'
 import { Layout,Row,Col,Icon,Tags,Divider } from 'antd';
 import Article from '../article/article'
 import {articleList} from '@/request/request'
 import {translateMarkdown} from '@/lib'
 import './index.less'
-const responsiveContent = {xxl: 16, xl:16, lg: 16,md:24, sm: 24, xs: 24};
-const responsiveArticle = {xxl: 6, xl: 6, lg: 6, md:0,sm: 0, xs: 0 };
+const rightFlag =         {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0};
+const responsiveContent = {xxl: 12, xl:13, lg: 17,md:17, sm: 22, xs: 24};
+const responsiveArticle = {xxl: 4, xl: 5, lg: 5, md:5,sm: 0, xs: 0 };
+const leftFlag =          {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0};
 // const gutter = { xxl: 2, xl:2, lg: 16,md:16, sm: 0, xs: 0}
 class Home extends Component{
     state ={
         list:[],
         total:0,
 
-    }
+    };
     componentWillMount() {
         this.getArticleList()
     }
@@ -34,14 +36,15 @@ class Home extends Component{
         })
     }
     jumpTo=(id)=>{
+        console.log(this.props);
         this.props.history.push(`/article/${id}`)
-    }
+    };
     render() {
-        const {list} = this.state
+        const {list} = this.state;
         return(
-            <Layout className="app-container">
-                <Headernav />
+            <div>
                 <Row type='flex' justify='space-around'>
+                    <Col {...leftFlag}/>
                     <Col {...responsiveContent}  className="content-inner-wrapper home">
                         <ul className="ul-list">
                             {list.map(item => (
@@ -50,11 +53,11 @@ class Home extends Component{
                                         <span className="title" onClick={() => this.jumpTo(item.id)}>{item.title}</span>
                                     </Divider>
 
-                                    <div
-                                        // onClick={() => this.jumpTo(item.id)}
-                                        className="article-detail description"
-                                        dangerouslySetInnerHTML={{ __html: item.content }}
-                                    />
+                                    {/*<div*/}
+                                        {/*// onClick={() => this.jumpTo(item.id)}*/}
+                                        {/*className="article-detail description"*/}
+                                        {/*dangerouslySetInnerHTML={{ __html: item.content }}*/}
+                                    {/*/>*/}
 
                                     <div className="list-item-action">
                                         <Icon type="message" style={{ marginRight: 7 }} />
@@ -71,10 +74,11 @@ class Home extends Component{
                     <Col {...responsiveArticle}>
                         <Sider></Sider>
                     </Col>
+                    <Col {...rightFlag}/>
                 </Row>
-            </Layout>
+            </div>
         )
     }
 }
 
-export default Home
+export default withRouter(Home)

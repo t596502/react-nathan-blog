@@ -24,8 +24,9 @@ export const login = (params)=>{
     }
 };
 
-export const register = ()=>{
-    return dispath =>{
-
+export const logout = ()=>{
+    return dispatch =>{
+        store.remove('userInfo');
+        dispatch({type:CONSTANTS.USER_LOGOUT})
     }
 };

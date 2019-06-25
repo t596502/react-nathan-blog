@@ -1,18 +1,24 @@
 import * as CONSTANTS from '../constants'
-
+import store from 'store'
 
 const defaultState ={
     auth:0,
     username:'',
 };
 
+const userInfo = store.get('userInfo');
+if(!!userInfo && userInfo !=='undefind'){
+    Object.assign(defaultState,{...userInfo})
+}
 
 export default (state = defaultState,action)=>{
-    console.log(action);
     switch (action.type) {
         case CONSTANTS.USER_LOGIN:
             const {username,auth} = action.payload;
             return {...state,username,auth};
+        case CONSTANTS.USER_LOGOUT:
+            console.log(1111);
+            return {auth:0,username:''};
         default:
             return state
     }

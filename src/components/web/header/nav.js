@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Icon, Menu} from "antd";
 import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types';
+
 class Nav extends Component {
 
     render() {

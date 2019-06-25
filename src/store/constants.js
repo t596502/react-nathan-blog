@@ -1,4 +1,5 @@
 export const USER_LOGIN = 'USER_LOGIN';
+export const USER_LOGOUT = 'USER_LOGOUT';
 
 export const COM_OPEN_AUTHMODAL = 'COM_OPEN_AUTHMODAL'
 export const COM_CLOSE_AUTHMODAL = 'COM_CLOSE_AUTHMODAL'

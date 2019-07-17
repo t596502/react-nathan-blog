@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component,lazy} from 'react';
 import { Button ,Dropdown,Menu,Avatar} from 'antd'
 import {connect} from "react-redux";
-import AuthModal from '../authModal'
 import { openAuthModal } from '@/store/common/actions'
 import { logout } from '@/store/user/actions'
+
+const AuthModal = lazy(()=> import('../authModal'));
 
 
 @connect(

@@ -64,7 +64,6 @@ class ALogin extends Component {
                     <Button style={{ width: '100%' }} size="large" type="primary" onClick={this.handleSubmit}>
                         登录
                     </Button>
-                    <div>auth:{this.props.auth}</div>
                 </div>
             </div>
         )

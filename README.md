@@ -1,6 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
+  "proxy": "http://www.nathan-tai.top"
 
 In the project directory, you can run:
 

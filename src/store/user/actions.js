@@ -5,7 +5,7 @@ import { message } from 'antd'
 import store from 'store'
 
 export const login = (params)=>{
-    return dispatch =>{
+    return dispatch =>
         api.login(params).then(res=>{
             const {data,code} = res;
             if(code === 0){
@@ -21,12 +21,23 @@ export const login = (params)=>{
             // console.log(res);
             return res
         });
-    }
+
 };
 
 export const logout = ()=>{
     return dispatch =>{
         store.remove('userInfo');
         dispatch({type:CONSTANTS.USER_LOGOUT})
+    }
+};
+
+export const register =(params) =>{
+    return dispatch =>{
+        api.register(params).then(res =>{
+            const {data,code } = res;
+            if(code === 0)message.success(res.message)
+            else message.error(res.message)
+            return res
+        })
     }
 };

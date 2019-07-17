@@ -5,10 +5,6 @@ import {translateMarkdown} from "@/lib";
 import './article.less';
 const { Title, Paragraph, Text } = Typography;
 
-const rightFlag = {xxl: 4, xl: 3, lg: 1, md: 1, sm: 1, xs: 0};
-const responsiveContent = {xxl: 12, xl: 13, lg: 17, md: 17, sm: 22, xs: 24};
-const responsiveArticle = {xxl: 4, xl: 5, lg: 5, md: 5, sm: 0, xs: 0};
-const leftFlag = {xxl: 4, xl: 3, lg: 1, md: 1, sm: 1, xs: 0};
 
 const aaa = {
     xxl: {span: 12, push: 4},
@@ -22,11 +18,10 @@ const aaa = {
 class Article extends Component {
     state = {
         detail: {}
-    }
+    };
 
     componentWillMount() {
         const id = this.props.match.params.id
-        console.log(id);
         this.getArticleDetail(id)
     }
 
@@ -34,8 +29,7 @@ class Article extends Component {
         articleDetail({id}).then(res => {
             const {code, msg, data} = res;
             if (code === 0) {
-                data.content = translateMarkdown(data.content)
-                console.log(translateMarkdown);
+                data.content = translateMarkdown(data.content);
                 this.setState({
                     detail: data
                 })

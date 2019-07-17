@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
-import {Divider,Table,Row} from "antd";
+import {Divider, Table, Tag, Pagination} from "antd";
 import { Link, } from 'react-router-dom'
 import {WrappedRegistrationForm} from './search'
+import {articleList} from "@/request/request";
+
 const data = [
     {
         key: '1',
@@ -22,36 +24,78 @@ const data = [
         address: 'Sidney No. 1 Lake Park',
     },
 ];
-
+let page = 1
+const pageSize = 10
 class Manage extends Component {
+    state = {
+        articleList:[]
+    };
+    componentWillMount() {
+        this.getArticleList()
+    }
+    getArticleList = ()=>{
+        articleList().then(res=>{
+            const {data,code} = res
+            if(code === 0){
+                console.log(data);
+                this.setState({
+                    articleList:this.filterData(data.rows),
+                    total:data.count
+                })
+            }
+        })
+    };
+    filterData=(data)=>{
+        data = data.map(item=>({
+            title:item.title,
+            category:item.category,
+            created_at:item.created_at,
+            updated_at:item.updated_at,
+            read_nums:item.read_nums[0].read_num
+        }));
+        return data
+    }
+
     getColumns = ()=> [
         {
             title: '标题',
             dataIndex: 'title',
-        },
-        {
-            title: '标签',
-            dataIndex: 'tags',
-        },
-        {
-            title: 'tags',
-            dataIndex: '',
+            key:'title'
         },
         {
             title:'分类',
-            dataIndex: 'categories',
+            dataIndex: 'category',
+            key:'category',
+            render: (text, record) => {
+
+                return (
+                    <div>
+                        {record.category.map((item,index)=>(
+                            <Tag color="#87d068" key={index}>{item.name}</Tag>
+                        ))}
+                    </div>
+                )
+            }
         },
         {
             title: '评论数',
             dataIndex: 'comments',
+            key:'comments',
+        },
+        {
+            title: '浏览数',
+            dataIndex: 'read_nums',
+            key:'read_nums',
         },
         {
             title: '发布时间',
-            dataIndex: 'createdAt',
+            dataIndex: 'created_at',
+            key:'created_at',
         },
         {
             title: '修改时间',
-            dataIndex: 'updatedAt',
+            dataIndex: 'updated_at',
+            key:'updated_at',
 
         },
         {
@@ -76,14 +120,16 @@ class Manage extends Component {
 
     }
     render() {
+        const {articleList,count} = this.state
         return (
             <div className='manage'>
                 <WrappedRegistrationForm />
                 <div style={{paddingTop:'10px'}}>
                     <Table
                         columns={this.getColumns()}
-                        dataSource={data}
+                        dataSource={articleList}
                         bordered
+                        pagination={{total:count,current:page,pageSize:pageSize}}
                     />
                 </div>
 

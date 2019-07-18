@@ -15,7 +15,7 @@ class EditableTagGroup extends Component {
         list: PropTypes.array,
     };
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps');
+        console.log('componentWillReceiveProps',);
         if(this.props.list !== nextProps.list){
             this.setState({
                 tags:nextProps.list

@@ -5,7 +5,7 @@ import SimpleMDE from 'simplemde';
 import './edit.less'
 import 'simplemde/dist/simplemde.min.css'
 import {translateMarkdown} from "@/lib";
-import {articleCreate,categoryList} from "@/request/request";
+import * as api from "@/request/request";
 
 
 class edit extends Component {
@@ -14,25 +14,42 @@ class edit extends Component {
         title: '',
         tagList: [],
         categoryList: [],
-        isEdit: false, // 组件状态 更新或创建
+        isCreate: true, // 组件状态 更新或创建
     };
-    categoryArray = []
+    categoryArray = [];
     componentDidMount() {
+        console.log(this.props)
         this.smde = new SimpleMDE({
             element: document.getElementById('editor').childElementCount,
             autofocus: true,
             autosave: true,
             previewRender: translateMarkdown
         });
-        this.getCategoryList()
+
+        if(this.props.location.state) this.getArticleDetail(this.props.location.state.id);
+        else this.getCategoryList();
+    }
+    getArticleDetail(id) {
+        api.articleDetail({id}).then(res => {
+            const {code,data} = res
+            if(code === 0){
+                this.smde.value(data.content);
+                const categoryList = data.category.map(d => d.name)
+                this.setState({
+                    title: data.title,
+                    categoryList,
+                    isCreate:false
+                })
+            }
+        })
     }
     getCategoryList(){
-        categoryList().then(res=>{
+        api.categoryList().then(res=>{
             console.log(res);
             const {code,data} = res
             if(code === 0){
                 let newList = data.sort((a,b) => b.count - a.count).map(item=> item.name);
-                newList = newList.slice(0,10)
+                newList = newList.slice(0,10);
                 this.setState({
                     categoryList:newList
                 })
@@ -50,8 +67,8 @@ class edit extends Component {
             content:this.smde.value(),
             categories:this.categoryArray
         };
-        console.log(this.smde.value());
-        articleCreate(params).then(res=>{
+        // const url = ''
+        api.articleCreate(params).then(res=>{
             console.log(res);
             const {code,data} = res
             if(code === 0){
@@ -67,9 +84,9 @@ class edit extends Component {
             }
         })
     };
-    categorySelect = (e)=>{
-        console.log(e);
-
+    categorySelect = (value)=>{
+        console.log(value);
+        this.categoryArray = value
     };
     render() {
         const {value,title,categoryList} = this.state

@@ -8,7 +8,7 @@ import InfiniteLoader from "react-window-infinite-loader";
 
 import Sider from '../../../components/web/sider'
 import {articleList} from '@/request/request'
-import {translateMarkdown} from '@/lib'
+import {translateMarkdown,decodeQuery} from '@/lib'
 import './index.less'
 const rightFlag =         {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0};
 const responsiveContent = {xxl: 12, xl:13, lg: 17,md:17, sm: 22, xs: 24};
@@ -17,14 +17,14 @@ const leftFlag =          {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0};
 
 
 let itemStatusMap = {};
-let page = 1
+let currentPage = 1
 const pageSize = 10
 
 const NoDataDesc = () => (
     <Fragment>
         不存在标题中含有 <span className="keyword"></span> 的文章！
     </Fragment>
-)
+);
 
 class Home extends Component{
 
@@ -33,13 +33,17 @@ class Home extends Component{
         // total:0,
     };
     componentWillMount() {
-        this.getArticleList()
+        const query = decodeQuery(this.props.search)
+        this.getArticleList(query)
     }
-    getArticleList(){
-        articleList({page,pageSize}).then(res=>{
+    componentWillReceiveProps(nextProps){
+        const query = decodeQuery(nextProps.location.search)
+        this.getArticleList(query)
+    }
+    getArticleList({page,title}){
+        articleList({page:page || currentPage,pageSize,title}).then(res=>{
             const {code,data,msg} =res
             if(code === 0){
-
                 const list = data.rows
                 list.forEach(item=>{
                     item.content = translateMarkdown(item.content)
@@ -55,19 +59,19 @@ class Home extends Component{
         this.props.history.push(`/article/${id}`)
     };
     onChange=(pageNumber)=>{
-        page = pageNumber;
+        currentPage = pageNumber;
         this.getArticleList()
     };
     render() {
         const {list,total} = this.state;
-        console.log(page);
+        console.log(currentPage);
         return(
             <Layout>
                 <Row type='flex' justify='space-around'>
                     <Col {...leftFlag}/>
                     <Col {...responsiveContent}  className="content-inner-wrapper home">
                         <ArticleList list={list} jumpTo={(e)=> this.jumpTo(e)}/>
-                        {list.length  > 0 ? (<Pagination showQuickJumper current={page} pageSize={pageSize} total={total} onChange={this.onChange} />) : (
+                        {list.length  > 0 ? (<Pagination showQuickJumper current={currentPage} pageSize={pageSize} total={total} onChange={this.onChange} />) : (
                             <div className="no-data">
                                 <Empty description={<NoDataDesc />} />
                             </div>

@@ -34,8 +34,8 @@ class aHome extends Component {
                         <AdminHeader collapsed={this.state.collapsed} onToggle={this.toggle}/>
                         <Content style={{ margin: '24px 16px 0',background:'#fff' }}>
                             <Switch>
-                                <Route path='/admin/addArticle' exact component={AddArticle} />
-                                <Route path='/admin/manage' exact component={Manage} />
+                                <Route path='/admin/article/edit' exact component={AddArticle} />
+                                <Route path='/admin/article/manage' exact component={Manage} />
                             </Switch>
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>Ant Design ©2019 Created by nathantai@outlook.com</Footer>

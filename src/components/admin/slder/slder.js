@@ -20,10 +20,10 @@ class SideBarNav extends Component {
                         <span><Icon type="mail"/><span>文章管理</span></span>
                     }>
                         <Menu.Item key="child1">
-                            <Link to='/admin/addArticle'>新增文章</Link>
+                            <Link to='/admin/article/edit'>新增文章</Link>
                         </Menu.Item>
                         <Menu.Item key="child2">
-                            <Link to='/admin/manage'>文章列表</Link>
+                            <Link to='/admin/article/manage'>文章列表</Link>
                         </Menu.Item>
                     </SubMenu>
                     <Menu.Item key="3">

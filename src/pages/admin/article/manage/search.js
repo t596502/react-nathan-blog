@@ -7,14 +7,12 @@ import {
     Row,
     Col,
     Button,
-    AutoComplete,
 } from 'antd';
 import './index.less'
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import {categoryList} from "@/request/request";
 
 const {Option} = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 @withRouter
 class RegistrationForm extends Component {

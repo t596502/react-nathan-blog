@@ -1,5 +1,5 @@
 import React,{ Suspense, lazy } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import {Provider} from 'react-redux'
 import store from '@/store'
 import { Spin } from 'antd';

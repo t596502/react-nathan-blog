@@ -1,15 +1,20 @@
 import axios from './axios'
 
-export const login = (data)=>{
-    return axios.post('/user/login',data)
+export const login = (params)=>{
+    return axios.post('/user/login',params)
 };
-export const register = (data)=>{
-    return axios.post('/user/register',data)
+export const register = (params)=>{
+    return axios.post('/user/register',params)
 };
-export const articleCreate = (data)=>{
-    return axios.post('/article/create',data)
+export const articleCreate = (params)=>{
+    return axios.post('/article/create',params)
 };
-
+export const articleUpdate = (params)=>{
+    return axios.post('/article/update',params)
+};
+export const articleDelete = (params)=>{
+    return axios.delete('/article/delete',{params})
+};
 export const articleList = (params)=>{
     return axios.get('/article/list',{params})
 };

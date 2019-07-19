@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {message,Spin} from 'antd'
+import {message} from 'antd'
 import store from 'store'
 import { Base64 } from 'js-base64';
 
@@ -66,7 +66,6 @@ instance.interceptors.response.use(
 )
 
 const _cecode = (token)=>{
-    console.log(Base64);
     const encode = Base64.toBase64(token +':')
     return `Basic ${encode}`
 };

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Row, Col, Input, Button, Modal, BackTop, message} from "antd";
+import { Input, Button, Modal, BackTop, message} from "antd";
 import TnTags from '@/components/admin/tn-tags/tn-tags'
 import SimpleMDE from 'simplemde';
 import './edit.less'
@@ -7,16 +7,16 @@ import 'simplemde/dist/simplemde.min.css'
 import {translateMarkdown} from "@/lib";
 import * as api from "@/request/request";
 
-
+const UPDATE = 'articleUpdate'
+const CREATE = 'articleCreate'
 class edit extends Component {
     state = {
         value: '',
         title: '',
-        tagList: [],
         categoryList: [],
         isCreate: true, // 组件状态 更新或创建
     };
-    categoryArray = [];
+    category = '';
     componentDidMount() {
         console.log(this.props)
         this.smde = new SimpleMDE({
@@ -65,12 +65,18 @@ class edit extends Component {
         const params = {
             title:this.state.title,
             content:this.smde.value(),
-            categories:this.categoryArray
+            category:this.category
         };
-        // const url = ''
-        api.articleCreate(params).then(res=>{
+        let hashName;
+        if(!this.state.isCreate) {
+            Object.assign(params,{id:this.props.location.state.id});
+            hashName = UPDATE
+        }else {
+            hashName = CREATE
+        }
+        api[hashName](params).then(res=>{
             console.log(res);
-            const {code,data} = res
+            const {code,data,msg} = res;
             if(code === 0){
                 Modal.confirm({
                     title: '提交成功',
@@ -81,15 +87,17 @@ class edit extends Component {
                         this.props.history.push(`/article/${data.id}`)
                     }
                 });
+            }else {
+                message.error(msg)
             }
         })
     };
     categorySelect = (value)=>{
         console.log(value);
-        this.categoryArray = value
+        this.category = value.join()
     };
     render() {
-        const {value,title,categoryList} = this.state
+        const {value,title,categoryList,isCreate} = this.state
         return (
             <div className="add-article">
                 <div className="title">
@@ -109,7 +117,7 @@ class edit extends Component {
                 <br/>
                 <textarea id="editor" defaultValue={value} />
                 <Button onClick={this.handleSubmit} type="primary">
-                    {'创建'}
+                    {isCreate ? '创建' : '更新'}
                 </Button>
                 <BackTop />
             </div>

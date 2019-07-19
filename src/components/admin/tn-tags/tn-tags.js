@@ -15,10 +15,10 @@ class EditableTagGroup extends Component {
         list: PropTypes.array,
     };
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps',);
         if(this.props.list !== nextProps.list){
             this.setState({
-                tags:nextProps.list
+                tags:nextProps.list,
+                // selectedList:[nextProps.list[0]]
             })
         }
     }
@@ -50,12 +50,14 @@ class EditableTagGroup extends Component {
     };
     handleChange = (value,checked) => {
 
-        const {selectedList} =  this.state;
-        if(selectedList.indexOf(value) > -1){
-            selectedList.splice(selectedList.indexOf(value), 1);
-        }else {
-            selectedList.push(value)
-        }
+        // const {selectedList} =  this.state;
+        let selectedList = []
+        // if(selectedList.indexOf(value) > -1){
+        //     selectedList.splice(selectedList.indexOf(value), 1);
+        // }else {
+        //     selectedList.push(value)
+        // }
+        selectedList.push(value)
         this.setState({
             selectedList
         });

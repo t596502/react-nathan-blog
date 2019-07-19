@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {Divider, Table, Tag, Pagination} from "antd";
+import {Divider, Table, Tag, message, Modal} from "antd";
 import { Link, } from 'react-router-dom'
 import WrappedRegistrationForm from './search'
-import {articleList,categoryList} from "@/request/request";
+import * as api from "@/request/request";
 import {decodeQuery} from '@/lib'
 
 
@@ -13,17 +13,17 @@ class Manage extends Component {
         articleList:[]
     };
     componentWillMount() {
-        const query = decodeQuery(this.props.search);
-        this.getArticleList(query)
+        this.query = decodeQuery(this.props.search);
+        this.getArticleList(this.query)
     }
     componentWillReceiveProps(nextProps) {
-        const query = decodeQuery(nextProps.location.search);
-        this.getArticleList(query)
+        this.query = decodeQuery(nextProps.location.search);
+        this.getArticleList(this.query)
     }
 
-    getArticleList = ({page,title,category})=>{
-        articleList({page:page || currentPage,pageSize,title,category}).then(res=>{
-            const {data,code} = res
+    getArticleList = ({page = currentPage,title,category})=>{
+        api.articleList({page:page,pageSize,title,category}).then(res=>{
+            const {data,code} = res;
             if(code === 0){
                 console.log(data);
                 this.setState({
@@ -96,25 +96,43 @@ class Manage extends Component {
                     <div className="action">
                         <Link to={`/article/${record.id}`}>查看</Link>
                         <Divider type="vertical" />
-                        {/* <span className="btn-edit">编辑</span> */}
                         <Link to={{ pathname: '/admin/article/edit', state: { id: record.id } }}>编辑</Link>
                         <Divider type="vertical" />
-                        <span className="btn-delete" onClick={() => this.handleDelete(record.id, record.title)}>
-                删除
-              </span>
+                        <span className="btn-delete" onClick={() => this.handleDelete(record.id, record.title)}>删除</span>
                     </div>
                 )
             }
         }
     ];
-    handleDelete =()=>{
-
-    }
+    handleDelete =(articleId,title)=>{
+        Modal.confirm({
+            title: '温馨提示！',
+            content: `是否删除${title}?`,
+            okText: '确认',
+            cancelText: '取消',
+            onOk:()=>{
+                const params = {
+                    id:articleId
+                };
+                console.log('articleId',articleId);
+                api.articleDelete(params).then(res=>{
+                    const {code,msg} = res
+                    if(code === 0){
+                        message.warning(`成功删除${title}`);
+                        console.log(this.query);
+                        this.getArticleList(this.query)
+                    }else {
+                        message.error(msg);
+                    }
+                })
+            }
+        });
+    };
     render() {
         const {articleList,count} = this.state
         return (
             <div className='manage'>
-                <WrappedRegistrationForm categoryData={categoryList} />
+                <WrappedRegistrationForm />
                 <div style={{paddingTop:'10px'}}>
                     <Table
                         columns={this.getColumns()}

@@ -5,16 +5,16 @@ import {connect} from "react-redux";
 import { login } from '@/store/user/actions'
 import './aLogin.less'
 
-// @withRouter
-// @connect(
-//     state => state.user,
-//     { login }
-// )
+@withRouter
+@connect(
+    state => state.user,
+    { login }
+)
 class ALogin extends Component {
     state = {
         username: '',
         password: ''
-    }
+    };
 
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value })

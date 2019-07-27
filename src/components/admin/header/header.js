@@ -1,16 +1,29 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import {Icon, Layout,Avatar,Dropdown,Menu} from "antd";
+import { logout } from '@/store/user/actions'
 import './header.less'
 const { Header, Sider, Content,Footer } = Layout;
 
-const menu = (
-    <Menu>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">退出登录</a>
-        </Menu.Item>
-    </Menu>
-);
+@connect(null,{logout})
+@withRouter
 class AdminHeader extends Component{
+
+    logOut =() =>{
+        this.props.history.push('/login');
+        this.props.logout()
+    };
+    menu =()=> (
+        <Menu>
+            <Menu.Item>
+                <span onClick={() => this.props.history.push('/')}>返回首页</span>
+            </Menu.Item>
+            <Menu.Item>
+                <span onClick={this.logOut}>退出登录</span>
+            </Menu.Item>
+        </Menu>
+    );
 
     render() {
         const {collapsed,onToggle} = this.props
@@ -22,7 +35,7 @@ class AdminHeader extends Component{
                         onClick={onToggle}
                     />
                     <div className="header-right">
-                        <Dropdown overlay={menu}>
+                        <Dropdown overlay={this.menu()}>
                             <Avatar style={{ backgroundColor: '#87d068' }} icon="user" />
                         </Dropdown>
                     </div>

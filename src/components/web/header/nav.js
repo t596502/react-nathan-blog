@@ -17,7 +17,7 @@ class Nav extends Component {
                 >
                     {navList.map((item)=>(
                     <Menu.Item key={item.link}>
-                        <Link to={item.link}>
+                        <Link onClick={()=>this.props.hideNav()} to={item.link}>
                             {item.icon && <Icon type={item.icon} style={{fontSize:'16px'}}/>}
                             {item.title}
                         </Link>

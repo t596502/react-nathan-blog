@@ -16,6 +16,11 @@ class headerLogo extends Component{
             visible: true,
         });
     };
+    hideNav = ()=>{
+        this.setState({
+            visible: false,
+        });
+    };
     render(){
         return(
             <div className="header-logo">
@@ -29,7 +34,7 @@ class headerLogo extends Component{
                     maskClosable={true}
                     onClose={this.onClose}
                 >
-                    <Nav mode={'vertical'} navList={this.props.navList}/>
+                    <Nav mode={'vertical'} hideNav={()=>this.hideNav()} navList={this.props.navList}/>
                 </Drawer>
             </div>
         )

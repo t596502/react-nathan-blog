@@ -27,3 +27,18 @@ export const categoryList = (params)=>{
     return axios.get('/category/getList',{params})
 };
 
+export const articleLike = (params)=>{
+    return axios.post('/favor/like',params)
+};
+export const articleDislike = (params)=>{
+    return axios.post('/favor/dislike',params)
+};
+export const articleLikeStatus = (params)=>{
+    return axios.get('/favor/isStatus',{params})
+};
+export const commentsAdd = (params)=>{
+    return axios.post('/comment/add',params)
+};
+export const commentsList = (params)=>{
+    return axios.get('/comment/list',{params})
+};

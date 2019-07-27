@@ -17,8 +17,8 @@ export default (state = defaultState,action)=>{
             const {username,auth} = action.payload;
             return {...state,username,auth};
         case CONSTANTS.USER_LOGOUT:
-            console.log(1111);
-            return {auth:0,username:''};
+
+            return {auth:0,username:'',token:''};
         default:
             return state
     }

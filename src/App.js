@@ -13,7 +13,7 @@ const aLogin = lazy(()=> import('./pages/admin/login/aLogin'));
 
 function loading() {
     return(
-        <Spin style={{position:'absolute',top:'50%',left:'50%',translate:'(-50%,-50%)'}} tip="Loading..." size="large" />
+        <Spin style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)'}} tip="Loading..." size="large" />
     )
 }
 

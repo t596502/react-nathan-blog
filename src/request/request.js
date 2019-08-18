@@ -42,3 +42,6 @@ export const commentsAdd = (params)=>{
 export const commentsList = (params)=>{
     return axios.get('/comment/list',{params})
 };
+export const replyCommentsAdd = (params)=>{
+    return axios.post('/reply/add',params)
+};

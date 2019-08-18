@@ -1,6 +1,8 @@
 import * as CONSTANTS from '../constants';
 
 const defaultState ={
+    colorList: ['magenta', 'blue', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'geekblue', 'purple'], // 标签颜色
+    colorMap: {},
     loginModalVisible: false,
     registerModalVisible: false,
 };

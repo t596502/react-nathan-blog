@@ -62,6 +62,9 @@ class Home extends Component{
         currentPage = pageNumber;
         this.getArticleList()
     };
+    controlLike=(id)=>{
+        // console.log(id);
+    };
     render() {
         const {list,total} = this.state;
         console.log(currentPage);
@@ -70,7 +73,7 @@ class Home extends Component{
                 <Row type='flex' justify='space-around'>
                     <Col {...leftFlag}/>
                     <Col {...responsiveContent}  className="content-inner-wrapper home">
-                        <ArticleList list={list} jumpTo={(e)=> this.jumpTo(e)}/>
+                        <ArticleList list={list} jumpTo={(e)=> this.jumpTo(e)} isLike={(e)=>this.controlLike(e)} />
                         {list.length  > 0 ? (<Pagination showQuickJumper current={currentPage} pageSize={pageSize} total={total} onChange={this.onChange} />) : (
                             <div className="no-data">
                                 <Empty description={<NoDataDesc />} />

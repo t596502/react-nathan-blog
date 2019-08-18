@@ -1,5 +1,6 @@
 import {Divider, Icon} from "antd";
 import React,{Component} from "react";
+import moment from 'moment'
 
 
 class ArticleList extends Component{
@@ -10,23 +11,19 @@ class ArticleList extends Component{
             <ul className="ul-list">
                 {list.map(item => (
                     <li key={item.id} className="ul-list-item">
+                        <div className='label'>
+                            <span className='label-c'>分类</span>
+                            <span className='label-con'>{item.category[0].name}</span>
+                            <span className='label-time'>{moment(item.created_at).fromNow()}</span>
+                        </div>
                         <Divider orientation="left">
                             <span className="title" onClick={() => this.props.jumpTo(item.id)}>{item.title}</span>
                         </Divider>
-
-                        {/*<div*/}
-                        {/*// onClick={() => this.jumpTo(item.id)}*/}
-                        {/*className="article-detail description"*/}
-                        {/*dangerouslySetInnerHTML={{ __html: item.content }}*/}
-                        {/*/>*/}
-
-                        <div className="list-item-action">
-                            <Icon type="message" style={{ marginRight: 7 }} />
-                            <span className="create-time">{item.created_at.slice(0, 10)}</span>
-
-                            {/*{getCommentsCount(item.comments)}*/}
-                            {/*<Tags type="tags" list={item.tags} />*/}
-                            {/*<Tags type="categories" list={item.categories} />*/}
+                        <div>
+                            <div onClick={()=>this.props.isLike(item.id)} className="list-item-action">
+                                <Icon className='icon-like' theme='filled' type="like" style={{ marginRight: 5 }} />
+                                <span className="like-nums">{item.favor_nums}</span>
+                            </div>
                         </div>
                     </li>
                 ))}

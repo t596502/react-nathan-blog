@@ -34,9 +34,9 @@ export const logout = ()=>{
 export const register =(params) =>{
     return dispatch =>{
         api.register(params).then(res =>{
-            const {data,code } = res;
-            if(code === 0)message.success(res.message)
-            else message.error(res.message)
+            const {code,msg } = res;
+            if(code === 0)message.success(msg)
+            else message.error(msg)
             return res
         })
     }

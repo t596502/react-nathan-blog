@@ -32,7 +32,7 @@ class BolgSider extends Component {
           </li>
         </ul>
 
-        <Divider>最近文章</Divider>
+        <Divider>热门文章</Divider>
         <ul className="recent-list">
             <li>
               dsadada

@@ -19,10 +19,23 @@ class ArticleList extends Component{
                         <Divider orientation="left">
                             <span className="title" onClick={() => this.props.jumpTo(item.id)}>{item.title}</span>
                         </Divider>
-                        <div>
+                        <div className='article-bottom'>
+                            {/*
                             <div onClick={()=>this.props.isLike(item.id)} className="list-item-action">
                                 <Icon className='icon-like' theme='filled' type="like" style={{ marginRight: 5 }} />
                                 <span className="like-nums">{item.favor_nums}</span>
+                            </div>*/}
+                            <div className='list-item-action'>
+                                <Icon className='icon-like' theme='outlined' type="like" style={{ marginRight: 5 }} />
+                                <span className="nums">{item.favor_nums}</span>
+                            </div>
+                            <div className='list-item-action'>
+                                <Icon className='icon-like' theme='outlined' type="eye" style={{ marginRight: 5 }} />
+                                <span className="nums">{item.read_nums[0].read_num}</span>
+                            </div>
+                            <div className='list-item-action'>
+                                <Icon className='icon-like' theme='outlined' type="message" style={{ marginRight: 5 }} />
+                                <span className="nums">{item.comment_nums}</span>
                             </div>
                         </div>
                     </li>

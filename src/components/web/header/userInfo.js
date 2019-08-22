@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import { openAuthModal } from '@/store/common/actions'
 import { logout } from '@/store/user/actions'
 
-const AuthModal = lazy(()=> import('../authModal'));
+import AuthModal from '../authModal';
 
 
 @connect(

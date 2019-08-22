@@ -1,10 +1,7 @@
 import React, { Component,Fragment } from 'react'
 import {withRouter} from 'react-router-dom'
 import { Layout,Row,Col,Tags,Pagination ,Empty} from 'antd';
-import { FixedSizeList as List } from "react-window";
-import AutoSizer from "react-virtualized-auto-sizer";
 import ArticleList from '@/components/web/list/list';
-import InfiniteLoader from "react-window-infinite-loader";
 
 import Sider from '../../../components/web/sider'
 import {articleList} from '@/request/request'

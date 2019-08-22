@@ -6,7 +6,7 @@ import { Base64 } from 'js-base64';
 const instance = axios.create({
     // baseURL:'http://api.nathan-tai.top',
     baseURL:'http://localhost:3000',
-    timeout:1000
+    timeout:10000
 });
 let timer;
 //拦截请求

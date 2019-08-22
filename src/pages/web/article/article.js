@@ -94,8 +94,9 @@ class Article extends Component {
                     <Col {...aaa}>{detail.id &&(
                         <div className="article-wrapper">
                             <header className="title">
+                                <Title >{detail.title}</Title>
                                 <div className="title-header">
-                                    <Avatar size="large" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{username}</Avatar>
+                                    {/*<Avatar size="large" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{username}</Avatar>*/}
                                     <div className="article-info">
                                         <div>
                                             <span>{detail.updated_at}</span>
@@ -107,7 +108,6 @@ class Article extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <Title >{detail.title}</Title>
 
                             </header>
                             <div className="article-detail" dangerouslySetInnerHTML={{__html: detail.content}}/>

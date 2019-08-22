@@ -3,30 +3,36 @@
     margin-top: 30px;
     width: 100%;
     overflow-y: scroll;
-    .label{
+
+    .label {
       display: flex;
       align-items: baseline;
       white-space: nowrap;
-      color:#b2bac2;
-      .label-c{
+      color: #b2bac2;
+
+      .label-c {
         color: #1890ff;
       }
-      .label-c,.label-con{
-        &::after{
+
+      .label-c, .label-con {
+        &::after {
           content: "·";
           color: rgb(178, 186, 194);
           margin: 0px 0.4em;
         }
       }
-      .label-con{
+
+      .label-con {
         cursor: pointer;
-        &:hover{
+
+        &:hover {
           color: #1890ff;
 
         }
       }
 
     }
+
     .ul-list-item {
       background: #fff;
       position: relative;
@@ -42,62 +48,76 @@
         background: #fcfcfc;
         transform: translate3d(0, -5px 0);
       }
+
       .title {
         color: #394d69;
         font-size: 1.4rem;
         font-weight: 600;
         line-height: 1.2;
         cursor: pointer;
+
         &:hover {
           color: #48b2ff;
         }
       }
+
       .create-time {
         font-size: 0.5em;
         //padding-left: 2px;
       }
-      .list-item-action {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        padding: 0 .8rem;
-        width: 3em;
-        height: 1.8rem;
-        font-size: 0.9rem;
-        //line-height: 1;
-        //white-space: nowrap;
-        color: #b2bac2;
-        border-radius: 1px;
-        border: 1px solid #edeeef;
-        cursor: pointer;
-        .icon-like{
 
+      .article-bottom {
+        display: flex;
+
+        .list-item-action {
+          //display: flex;
+          //align-items: center;
+          //justify-content: center;
+          //position: relative;
+          //padding: 0 .8rem;
+          //width: 3em;
+          //height: 1.8rem;
+          //font-size: 0.9rem;
+          //border: 1px solid #edeeef;
+          color: #b2bac2;
+          border-radius: 1px;
+          //cursor: pointer;
+          margin-right: 10px;
+          .icon-like {
+
+          }
+
+          .nums {
+            margin-top: 0.1rem;
+          }
+
+          //&:hover {
+          //  color: #48b2ff;
+          //  background: #f7f8fa;
+          //}
         }
-        .like-nums{
-          margin-top: 0.1rem;
-        }
-        &:hover{
-          color: #48b2ff;
-          background: #f7f8fa;
-        }
+
       }
     }
   }
+
   .preview {
     position: fixed;
     width: 260px;
     top: 104px;
     right: 20px;
     list-style-type: circle;
+
     .title {
       color: #394d69;
       font-size: 22px;
     }
+
     li {
       a {
         color: #8590a6;
       }
+
       // padding-left: 16px;
       display: block;
       -webkit-transition: all 0.3s ease;
@@ -109,15 +129,18 @@
 
       &:hover {
         background: #f0f2f5;
+
         a {
           color: #40a9ff;
         }
       }
     }
   }
+
   .no-data {
     margin-top: 26%;
   }
+
   .keyword {
     font-size: 18px;
     font-weight: bold;

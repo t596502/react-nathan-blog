@@ -45,6 +45,12 @@
 
     }
   }
+  .right-navigation{
+    position: fixed;
+    width: 260px;
+    top: 70px;
+    right: 10px;
+  }
   .article-comments{
     //margin-top: 20px;
     padding: 0 20px 20px;
@@ -58,5 +64,11 @@
       }
     }
 
+  }
+
+  @media screen and (max-width: 1120px) {
+    .right-navigation {
+      display: none;
+    }
   }
 }

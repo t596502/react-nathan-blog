@@ -6,11 +6,11 @@ import { Spin } from 'antd';
 const Index = lazy(()=> import('@/pages/web/index/index'));
 const Admin = lazy(()=> import('./pages/admin/home/aHome'));
 const aLogin = lazy(()=> import('./pages/admin/login/aLogin'));
-// const Index = lazy(()=> import('@/pages/web/index/index'));
-// import Article from '@/pages/web/article/article'
-// import Admin from './pages/admin/home/aHome'
-// import aLogin from './pages/admin/login/aLogin'
-
+/*
+import Index from '@/pages/web/index/index';
+import Admin from './pages/admin/home/aHome'
+import aLogin from './pages/admin/login/aLogin'
+*/
 function loading() {
     return(
         <Spin style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)'}} tip="Loading..." size="large" />

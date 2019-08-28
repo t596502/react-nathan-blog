@@ -4,12 +4,13 @@ import { Button, message, Input, Icon } from 'antd'
 import {connect} from "react-redux";
 import { login } from '@/store/user/actions'
 import './aLogin.less'
+import reduxAction from '@/store'
 
-@withRouter
-@connect(
-    state => state.user,
-    { login }
-)
+// @withRouter
+// @connect(
+//     state => state.user,
+//     { login }
+// )
 class ALogin extends Component {
     state = {
         username: '',
@@ -21,20 +22,20 @@ class ALogin extends Component {
 
     };
 
-    handleSubmit = async () => {
+    handleSubmit = () => {
         let params = {
             type:101
         };
         Object.assign(params,this.state)
-        await this.props.mapLogin(params);
-        console.log(this.props.auth);
+        // const a = await this.props.mapLogin(params);
+        this.props.mapLogin(params).then(res=>{
             if (this.props.auth === 10) {
                 this.props.history.push('/admin')
                 message.success('登录成功')
-            } else if (this.props.auth === 2) {
+            } else  {
                 message.warning('您的权限不足！')
             }
-
+        })
     };
 
     render() {
@@ -70,15 +71,14 @@ class ALogin extends Component {
     }
 }
 const mapState = (state,props)=>{
-    console.log(props);
     return{
         auth:state.user.auth
     }
 }
 
-const mapToAction = (action)=>({
-     mapLogin (params){
-         action(login(params))
+const mapToAction = (dispatch)=>({
+     mapLogin(params){
+         return dispatch(login(params))
     },
 });
 

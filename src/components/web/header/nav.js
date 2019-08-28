@@ -4,7 +4,9 @@ import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types';
 
 class Nav extends Component {
-
+    goNav = (link)=>{
+        this.props.history.push(link)
+    }
     render() {
         const {navList} = this.props;
 
@@ -16,11 +18,12 @@ class Nav extends Component {
                     style={{borderRight:this.props.mode === 'vertical' ? '0' : ''}}
                 >
                     {navList.map((item)=>(
-                    <Menu.Item key={item.link}>
-                        <Link onClick={()=>this.props.hideNav()} to={item.link}>
+                    <Menu.Item onClick={()=>this.goNav(item.link)}  key={item.link}>
+                        {/*<Link onClick={()=>this.props.hideNav()} to={item.link}>*/}
+                        <span>
                             {item.icon && <Icon type={item.icon} style={{fontSize:'16px'}}/>}
                             {item.title}
-                        </Link>
+                        </span>
                     </Menu.Item>
                     ))}
                 </Menu>
@@ -35,4 +38,4 @@ Nav.propTypes ={
 Nav.defaultProps = {
     mode: 'horizontal'
 };
-export default Nav
+export default withRouter(Nav)

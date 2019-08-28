@@ -236,7 +236,6 @@ class NathanComment extends Component {
 
     render() {
         const {comments, submitting, value, commentsId, replyContent, replyId,} = this.state;
-        console.log('replyId:', replyId, '|| commentsId:', commentsId);
         const commonProps = {
             replyContent,
             openReply: this.openReply,
@@ -263,7 +262,7 @@ class NathanComment extends Component {
                         />
                     }
                 />
-                <span className="comments-length">{`${comments.length} ${comments.length > 0 ? '条评论' : 'reply'}`}</span>
+                <span className="comments-length">{`${this.props.commentsLength} ${this.props.commentsLength > 0 ? '条评论' : 'reply'}`}</span>
                 {comments.length > 0 &&
                 comments.map((item, index) => (
                     <CommentList commentsId={commentsId} comments={item} key={index} {...commonProps}>

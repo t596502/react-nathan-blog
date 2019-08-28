@@ -1,21 +1,23 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux";
-import {Row, Col, Typography, Icon, message, Avatar} from 'antd';
+import {Row, Col, Typography, Icon, message, BackTop} from 'antd';
 import * as api from "@/request/request";
 import {translateMarkdown} from "@/lib";
 import Comment from './comment/comment'
+import Navigation from './navigation'
 import './article.less';
-const { Title, Paragraph,  } = Typography;
+const { Title } = Typography;
 
 
 const aaa = {
     xxl: {span: 12, push: 4},
     xl: {span: 13, push: 3},
     lg: {span: 17, push: 1},
-    md: {span: 17, push: 1},
+    md: {span: 22, push: 1},
     sm: {span: 22, push: 1},
     xs: {span: 24},
 };
+
 @connect(
     state => state => state.user,
     null
@@ -23,13 +25,13 @@ const aaa = {
 class Article extends Component {
     state = {
         detail: {},
-        likeStatus:false
+        likeStatus:false,
+        targetOffset:10
     };
 
     componentWillMount() {
         const id = this.props.match.params.id
         this.getArticleDetail(id)
-        console.log(this.props.username);
         if(this.props.username){
             this.getArticleLikeStatus(id)
         }
@@ -84,10 +86,6 @@ class Article extends Component {
     render() {
         const {detail,likeStatus} = this.state;
         const {username}= this.props;
-        const classname = {
-            'article-like':true,
-            'flag':likeStatus
-        }
         return (
             <div className="article">
                 <Row >
@@ -104,16 +102,19 @@ class Article extends Component {
                                         <div>
                                             <span>字数 {detail.contentLength}</span>
                                             <span style={{margin:'0 8px'}}>阅读 {detail.read_nums}</span>
-                                            <span>喜欢 {detail.favor_nums}</span>
+                                            <span style={{marginRight:'8px'}}>喜欢 {detail.favor_nums}</span>
+                                            <span>评论 {detail.comment_nums}</span>
                                         </div>
                                     </div>
                                 </div>
 
                             </header>
+
                             <div className="article-detail" dangerouslySetInnerHTML={{__html: detail.content}}/>
+
                             <div className='like-wrapper'>
                                 <div className={['article-like',likeStatus && 'flag'].join(' ')}
-                                     onClick={(e)=>this.isLike(detail.id)}>
+                                     onClick={()=>this.isLike(detail.id)}>
                                     <Icon type='like'
                                           style={{fontSize:'30px',color:likeStatus ? '#fff' :'#969696'}}
                                           theme={'outlined'} />
@@ -123,18 +124,21 @@ class Article extends Component {
 
                         </div>)}
                     </Col>
-                    {/*<Col>dsadsa</Col>*/}
+                    <div span={4} push={4} className='right-navigation'>
+                        <Navigation content={detail.content} />
+                    </div>
                 </Row>
                 <Row>
                     <Col {...aaa}>
                         <div className="article-comments">
                             <section className="comments">
                                 <Title className='title' level={4} type='secondary'>评论</Title>
-                                <Comment articleId={detail.id}/>
+                                <Comment articleId={detail.id} commentsLength={detail.comment_nums || 0} />
                             </section>
                         </div>
                     </Col>
                 </Row>
+                <BackTop />
             </div>
 
         )

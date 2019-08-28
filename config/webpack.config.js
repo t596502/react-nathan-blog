@@ -359,7 +359,7 @@ module.exports = function(webpackEnv) {
                         },
                       },
                     },
-                  ],
+                  ]
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -393,6 +393,7 @@ module.exports = function(webpackEnv) {
                 // debugger to show the original code. Instead, the code
                 // being evaluated would be much more helpful.
                 sourceMaps: false,
+
               },
             },
             // "postcss" loader applies autoprefixer to our CSS.

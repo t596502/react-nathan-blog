@@ -1,8 +1,10 @@
 import axios from 'axios'
-import {message} from 'antd'
+import {message,Spin} from 'antd'
 import store from 'store'
 import { Base64 } from 'js-base64';
-
+import {logout} from '@/store/user/actions'
+import {openAuthModal} from '@/store/common/actions'
+import reduxAction from '@/store'
 const instance = axios.create({
     // baseURL:'http://api.nathan-tai.top',
     baseURL:'http://localhost:3000',
@@ -16,6 +18,7 @@ instance.interceptors.request.use(
         if (userInfo) {
             config.headers['Authorization'] = _cecode(userInfo.token)
         }
+        Spin.setDefaultIndicator()
         return config
     },
     error => {
@@ -27,7 +30,11 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
     response => {
-        if (response.data.code === 401 && response.data.message) message.warning(response.data.message)
+        const {code} = response.data
+        if (code === 202 && response.data.msg){
+            reduxAction.dispatch(logout())
+            reduxAction.dispatch(openAuthModal('login'))
+        }
         return response.data
     },
     err => {

@@ -6,19 +6,13 @@ export const login = (params)=>{
 export const register = (params)=>{
     return axios.post('/user/register',params)
 };
-export const articleCreate = (params)=>{
-    return axios.post('/article/create',params)
-};
-export const articleUpdate = (params)=>{
-    return axios.post('/article/update',params)
-};
-export const articleDelete = (params)=>{
-    return axios.delete('/article/delete',{params})
-};
+
 export const articleList = (params)=>{
     return axios.get('/article/list',{params})
 };
-
+export const archiveList = (params)=>{
+    return axios.get('/article/archiveList',params)
+};
 export const articleDetail = (params)=>{
     return axios.get('/article/detail',{params})
 };
@@ -44,4 +38,16 @@ export const commentsList = (params)=>{
 };
 export const replyCommentsAdd = (params)=>{
     return axios.post('/reply/add',params)
+};
+
+
+// 后台
+export const articleCreate = (params)=>{
+    return axios.post('/article/create',params)
+};
+export const articleUpdate = (params)=>{
+    return axios.post('/article/update',params)
+};
+export const articleDelete = (params)=>{
+    return axios.delete('/article/delete',{params})
 };

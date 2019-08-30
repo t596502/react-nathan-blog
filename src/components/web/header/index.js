@@ -13,13 +13,13 @@ const navList = [
         link: '/'
     },
     {
-        icon: 'snippets',
-        title: '文章',
+        icon: 'bar-chart',
+        title: '归档',
         link: '/archives'
     },
     {
         icon: 'folder',
-        title: '分类',
+        title: '项目',
         link: '/categories'
     },
     {
@@ -27,7 +27,7 @@ const navList = [
         title: '关于',
         link: '/about'
     }
-]
+];
 
 const NathanHeader = ()=>{
     const leftFlag =          {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0}

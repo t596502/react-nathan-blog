@@ -33,7 +33,7 @@ instance.interceptors.response.use(
         const {code} = response.data
         if (code === 202 && response.data.msg){
             reduxAction.dispatch(logout())
-            reduxAction.dispatch(openAuthModal('login'))
+            // reduxAction.dispatch(openAuthModal('login'))
         }
         return response.data
     },

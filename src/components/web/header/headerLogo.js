@@ -36,8 +36,11 @@ class headerLogo extends Component{
                 >
                     <Nav mode={'vertical'} hideNav={()=>this.hideNav()} navList={this.props.navList}/>
                 </Drawer>
+                <div>
+
+                </div>
             </div>
         )
     }
-};
+}
 export default headerLogo

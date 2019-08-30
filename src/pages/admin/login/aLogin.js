@@ -32,7 +32,7 @@ class ALogin extends Component {
             if (this.props.auth === 10) {
                 this.props.history.push('/admin')
                 message.success('登录成功')
-            } else  {
+            }else if (this.props.auth < 10 && this.props.auth > 0)  {
                 message.warning('您的权限不足！')
             }
         })

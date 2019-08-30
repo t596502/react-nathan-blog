@@ -1,26 +1,21 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux";
 import {Row, Col, Typography, Icon, message, BackTop} from 'antd';
-import * as api from "@/request/request";
-import {translateMarkdown} from "@/lib";
+
 import Comment from './comment/comment'
 import Navigation from './navigation'
+import {openAuthModal} from '@/store/common/actions'
+import * as api from "@/request/request";
+import {translateMarkdown} from "@/lib";
+import CONFIG from '@/config'
 import './article.less';
 const { Title } = Typography;
 
 
-const aaa = {
-    xxl: {span: 12, push: 4},
-    xl: {span: 13, push: 3},
-    lg: {span: 17, push: 1},
-    md: {span: 22, push: 1},
-    sm: {span: 22, push: 1},
-    xs: {span: 24},
-};
 
 @connect(
     state => state => state.user,
-    null
+    {openAuthModal}
 )
 class Article extends Component {
     state = {
@@ -64,7 +59,16 @@ class Article extends Component {
             }
         })
     }
+    isLogin =() =>{
+        if (!this.props.username) {
+            this.props.openAuthModal('login')
+            return false
+        }else {
+            return true
+        }
+    };
     isLike= id =>{
+        if(!this.isLogin()) return;
         let {likeStatus,detail} = this.state;
         const apiName = likeStatus ? 'articleDislike' : 'articleLike';
         const succMsg = likeStatus ? '取消点赞成功' : '点赞成功';
@@ -89,7 +93,7 @@ class Article extends Component {
         return (
             <div className="article">
                 <Row >
-                    <Col {...aaa}>{detail.id &&(
+                    <Col {...CONFIG.LAYOUT_HOME}>{detail.id &&(
                         <div className="article-wrapper">
                             <header className="title">
                                 <Title >{detail.title}</Title>
@@ -129,7 +133,7 @@ class Article extends Component {
                     </div>
                 </Row>
                 <Row>
-                    <Col {...aaa}>
+                    <Col {...CONFIG.LAYOUT_HOME}>
                         <div className="article-comments">
                             <section className="comments">
                                 <Title className='title' level={4} type='secondary'>评论</Title>

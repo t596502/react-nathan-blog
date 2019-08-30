@@ -25,7 +25,6 @@ class Manage extends Component {
         api.articleList({page:page,pageSize,title,category}).then(res=>{
             const {data,code} = res;
             if(code === 0){
-                console.log(data);
                 this.setState({
                     articleList:this.filterData(data.rows),
                     total:data.count
@@ -41,6 +40,7 @@ class Manage extends Component {
             created_at:item.created_at,
             updated_at:item.updated_at,
             read_nums:item.read_nums[0].read_num,
+            comment_nums:item.comment_nums,
             key:item.id,
             id:item.id
         }));
@@ -70,8 +70,8 @@ class Manage extends Component {
         },
         {
             title: '评论数',
-            dataIndex: 'comments',
-            key:'comments',
+            dataIndex: 'comment_nums',
+            key:'comment_nums',
         },
         {
             title: '浏览数',
@@ -128,8 +128,13 @@ class Manage extends Component {
             }
         });
     };
+    pageChange =(page)=>{
+        currentPage = page
+        this.getArticleList({})
+
+    }
     render() {
-        const {articleList,count} = this.state
+        const {articleList,total} = this.state
         return (
             <div className='manage'>
                 <WrappedRegistrationForm />
@@ -138,7 +143,7 @@ class Manage extends Component {
                         columns={this.getColumns()}
                         dataSource={articleList}
                         bordered
-                        pagination={{total:count,current:currentPage,pageSize:pageSize}}
+                        pagination={{total:total,current:currentPage,pageSize:pageSize,onChange:(page)=>this.pageChange(page)}}
                     />
                 </div>
 

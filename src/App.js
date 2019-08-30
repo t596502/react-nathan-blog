@@ -1,8 +1,9 @@
 import React,{ Suspense, lazy } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter, Route, Switch } from 'react-router-dom'
 import {Provider} from 'react-redux'
 import store from '@/store'
 import { Spin } from 'antd';
+import AuthorizedRoute from './AuthorizedRoute'
 const Index = lazy(()=> import('@/pages/web/index/index'));
 const Admin = lazy(()=> import('./pages/admin/home/aHome'));
 const aLogin = lazy(()=> import('./pages/admin/login/aLogin'));
@@ -21,15 +22,16 @@ function App() {
 
   return (
       <Provider store={store}>
-          <BrowserRouter>
+          <HashRouter forceRefresh={true}>
               <Suspense fallback={loading()}>
               <Switch>
-                  <Route path='/admin'  component={Admin} />
+                  {/*<Route path='/admin'  component={Admin} />*/}
+                  <AuthorizedRoute path='/admin' linkType={'admin'}  component={Admin} />
                   <Route path='/login' component={aLogin} />
                   <Route path='/' component={Index} />
               </Switch>
               </Suspense>
-          </BrowserRouter>
+          </HashRouter>
       </Provider>
 
   );

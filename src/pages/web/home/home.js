@@ -4,7 +4,8 @@ import { Layout,Row,Col,Tags ,Spin} from 'antd';
 import ArticleList from '@/components/web/list/list';
 import InfiniteScroll from 'react-infinite-scroller'
 import Sider from '../../../components/web/sider'
-import {articleList} from '@/request/request'
+// import {articleList,getCategoryList} from '@/request/request'
+import * as api from '@/request/request'
 import {translateMarkdown,decodeQuery} from '@/lib'
 import './index.less'
 const rightFlag =         {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0};
@@ -13,9 +14,7 @@ const responsiveArticle = {xxl: 4, xl: 5, lg: 5, md:5,sm: 0, xs: 0 };
 const leftFlag =          {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0};
 
 
-let itemStatusMap = {};
-let currentPage = 1
-const pageSize = 8
+const pageSize = 5
 
 const NoDataDesc = () => (
     <Fragment>
@@ -31,20 +30,32 @@ class Home extends Component{
         hotList:[],
         loading:false,
         hasMore: true,
+        categoryList:[]
     };
     currentPage = 1
     componentWillMount() {
-        const query = decodeQuery(this.props.search)
-        console.log(query);
-        this.getArticleList(query)
+        this.query = decodeQuery(this.props.location.search)
+        console.log(this.props);
+        if(!this.state.list.length)this.getArticleList()
         this.getHotArticleList()
+        this.getCategoryList()
     }
     componentWillReceiveProps(nextProps){
-        const query = decodeQuery(nextProps.location.search)
-        this.getArticleList(query)
+        this.currentPage = 1
+        this.query = decodeQuery(nextProps.location.search)
+        this.getArticleList()
     }
-    getArticleList({page,title},isMore){
-        articleList({page:page || this.currentPage,pageSize,title}).then(res=>{
+    getArticleList(isMore){
+        let params = {
+            pageSize,
+            page:this.currentPage
+        };
+        if(JSON.stringify(this.query) !== '{}'){
+            delete params.page
+            Object.assign(params,this.query)
+            // delete params.
+        }
+        api.articleList(params).then(res=>{
             setTimeout(()=>{
                 if(isMore){
                     this.setState({
@@ -59,14 +70,14 @@ class Home extends Component{
                 this.setState({
                     hasMore:list.length === pageSize
                 });
-                if(this.state.list.length){
+                if(this.state.list.length && params.page != 1){
                     this.setState({
                         list:this.state.list.concat(list)
                     })
                 }else {
                     this.setState({
                         list,
-                        total:data.count
+                        // total:data.count
                     });
                 }
                 ++this.currentPage
@@ -74,7 +85,7 @@ class Home extends Component{
         })
     }
     getHotArticleList(){
-        articleList({is_hot:1}).then(res=>{
+        api.articleList({is_hot:1}).then(res=>{
             const {code,data,msg} =res
             if(code === 0){
                 const hotList = data.rows;
@@ -91,10 +102,12 @@ class Home extends Component{
     jumpTo=(id)=>{
         this.props.history.push(`/article/${id}`)
     };
+    /*
     onChange=(pageNumber)=>{
         this.currentPage = pageNumber;
         this.getArticleList()
     };
+    */
     controlLike=(id)=>{
         // console.log(id);
     };
@@ -107,9 +120,22 @@ class Home extends Component{
             this.getArticleList({},true)
         }
 
+    };
+    getCategoryList(){
+        api.categoryList().then(res=>{
+            console.log(res);
+            const {code,data} = res
+            if(code === 0){
+                let newList = data.sort((a,b) => b.count - a.count).map(item=> item.name);
+                newList = newList.slice(0,10);
+                this.setState({
+                    categoryList:newList
+                })
+            }
+        })
     }
     render() {
-        const {list,total,hotList} = this.state;
+        const {list,hotList,categoryList} = this.state;
         return(
             <Layout style={{height: 'calc(100vh - 64px)',overflowY: 'auto'}}>
                 <InfiniteScroll
@@ -123,7 +149,7 @@ class Home extends Component{
                     <Col {...leftFlag}/>
                     <Col {...responsiveContent}  className="content-inner-wrapper home">
 
-                            <ArticleList list={list} jumpTo={(e)=> this.jumpTo(e)} isLike={(e)=>this.controlLike(e)} />
+                            <ArticleList list={list} jumpTo={(e)=> this.jumpTo(e)} />
                             {this.state.loading &&  (
                                 <div className="demo-loading-container">
                                     <Spin />
@@ -136,7 +162,7 @@ class Home extends Component{
                         {/*)}*/}
                     </Col>
                     <Col {...responsiveArticle}>
-                        <Sider hotList={hotList} jumpTo={(e)=> this.jumpTo(e)} />
+                        <Sider categoryList={categoryList} hotList={hotList} jumpTo={(e)=> this.jumpTo(e)} />
                     </Col>
                     <Col {...rightFlag}/>
                 </Row>

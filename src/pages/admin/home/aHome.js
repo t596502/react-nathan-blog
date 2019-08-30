@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Route,Switch} from 'react-router-dom'
+import {Route,Switch,Redirect} from 'react-router-dom'
 import SideBarNav from '../../../components/admin/slder/slder'
 import AdminHeader from '../../../components/admin/header/header'
 import AddArticle from '../article/edit/edit'
@@ -7,7 +7,7 @@ import Manage from '../article/manage/manage'
 import './aHome.less'
 import { Layout, Menu, Icon } from 'antd';
 
-const { Header, Sider, Content,Footer } = Layout;
+const { Sider, Content,Footer } = Layout;
 
 class aHome extends Component {
     state = {

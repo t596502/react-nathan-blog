@@ -25,11 +25,10 @@ const FormItemLayout = {
         registerModalVisible:state.common.registerModalVisible
     }),
     (dispatch)=>({
-        closeAuthModal,
+        closeAuthModal:(type)=>dispatch(closeAuthModal(type)),
         login:(params)=>dispatch(login(params)),
         register:(params)=>dispatch(register(params))
     })
-    // {closeAuthModal,login,register}
 )
 class LoginModel extends Component {
     constructor(props){
@@ -89,7 +88,6 @@ class LoginModel extends Component {
 
         return(
             <Modal
-                closable={false}
                 title={type}
                 width={320}
                 footer={null}

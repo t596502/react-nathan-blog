@@ -1,16 +1,19 @@
 import React, {Component} from 'react'
 import './index.less'
-
-import {Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
 import {Divider, Tag, Icon} from 'antd'
 
 
+@withRouter
 class BolgSider extends Component {
 
+    searchTag = (category) => {
+        this.props.history.push(`/?page=1&category=${category}`)
+    }
 
     render() {
-        const {hotList} = this.props;
+        const {hotList, categoryList} = this.props;
         return (
             <div className="sider-wrapper">
                 <img
@@ -34,21 +37,33 @@ class BolgSider extends Component {
                     </li>
                 </ul>
 
-                <Divider>热门文章</Divider>
+                <Divider>
+                    <Icon type='fire'/>
+                    <span style={{marginLeft:'3px'}}>
+                    热门文章
+                    </span>
+                </Divider>
                 <ul className="recent-list">
-                    {hotList.length ? hotList.map((item,index)=>{
-                        return ( index < 5 &&
-                            <li onClick={() => this.props.jumpTo(item.id)} key={item.id}>
+                    {hotList.length ? hotList.map((item, index) => {
+                        return (index < 5 &&
+                            <li onClick={() => this.props.jumpTo(item.id)} key={item.created_at}>
                                 <a href="javascript:;">{item.title}</a>
                             </li>
                         )
                     }) : <li>暂无数据</li>}
                 </ul>
-                <Divider>分类</Divider>
+                <Divider>
+                    <Icon type="folder" />
+                    <span style={{marginLeft:'3px'}}>
+                    分类
+                    </span>
+                </Divider>
                 <div className="tags-content">
-                    {/*<Tag color={colorList[i] ? colorList[i] : colorList[random(colorList)]}>*/}
-
-                    {/*</Tag>*/}
+                    {categoryList.length ? categoryList.map((item, index) => (
+                        <Tag onClick={() => this.searchTag(item)} className='tags' key={index} color={'#eee'}>
+                            <a href="javascript:;">{item}</a>
+                        </Tag>
+                    )) : ''}
                 </div>
             </div>
         )

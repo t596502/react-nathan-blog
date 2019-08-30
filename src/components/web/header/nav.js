@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {Icon, Menu} from "antd";
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter,Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
-
+//                         {/*<Link onClick={()=>this.props.hideNav()} to={item.link}>*/}
+//onClick={()=>this.goNav(item.link)}
 class Nav extends Component {
-    goNav = (link)=>{
-        this.props.history.push(link)
-    }
+    // goNav = (link)=>{
+    //     console.log(this.props.history);
+    //     this.props.history.push(link);
+    //     if(this.props.hideNav) this.props.hideNav()
+    // };
     render() {
         const {navList} = this.props;
 
@@ -18,12 +21,11 @@ class Nav extends Component {
                     style={{borderRight:this.props.mode === 'vertical' ? '0' : ''}}
                 >
                     {navList.map((item)=>(
-                    <Menu.Item onClick={()=>this.goNav(item.link)}  key={item.link}>
-                        {/*<Link onClick={()=>this.props.hideNav()} to={item.link}>*/}
-                        <span>
+                    <Menu.Item key={item.link}>
+                        <Link onClick={()=>this.props.hideNav ? this.props.hideNav() : ''} to={{pathname:item.link,state:{fromDashboard: true}}}>
                             {item.icon && <Icon type={item.icon} style={{fontSize:'16px'}}/>}
                             {item.title}
-                        </span>
+                        </Link>
                     </Menu.Item>
                     ))}
                 </Menu>

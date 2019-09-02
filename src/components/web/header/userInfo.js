@@ -8,11 +8,13 @@ import AuthModal from '../authModal';
 
 
 @connect(
-    state=>({username:state.user.username}),
+    state=>({username:state.user.username,windowWidth:state.common.windowWidth}),
     {openAuthModal,logout}
 )
 class UserInfo extends Component{
-
+    state={
+        screenWidth:'auto'
+    }
     menu = ()=> (
         <Menu>
             <Menu.Item>
@@ -22,16 +24,18 @@ class UserInfo extends Component{
     );
 
     render() {
-        const {username} = this.props
+        const {username,windowWidth} = this.props
         return(
             <div>
                 {!username ? (
                     <div>
                         <div id="user-info">
                             <div className="login">
-                                <Button type="primary" icon="login" onClick={()=>this.props.openAuthModal('login')}>登录</Button>
+                                <Button type={windowWidth > 600 ? 'primary' : 'link'} size={windowWidth > 600 ? 'default' : 'small'} onClick={()=>this.props.openAuthModal('login')}>登录</Button>
                             </div>
-                            <Button type="danger" ghost onClick={()=>{this.props.openAuthModal('register')}}>注册</Button>
+                            <div className='register'>
+                                <Button type="danger" size={windowWidth > 600 ? 'default' : 'small'} ghost onClick={()=>{this.props.openAuthModal('register')}}>注册</Button>
+                            </div>
                         </div>
                         <AuthModal />
                     </div>

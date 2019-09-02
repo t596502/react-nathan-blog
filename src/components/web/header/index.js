@@ -3,8 +3,10 @@ import Nav from './nav'
 import Search from './search'
 import UserInfo from './userInfo'
 import HeaderLogo from './headerLogo'
+import MiniNav from './miniNav'
 import './index.less'
-import { Layout, Row, Col ,Icon} from 'antd'
+import {Layout, Row, Col, Icon, Drawer} from 'antd'
+
 const { Header} = Layout;
 const navList = [
     {
@@ -30,20 +32,23 @@ const navList = [
 ];
 
 const NathanHeader = ()=>{
-    const leftFlag =          {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0}
-    const responsiveLeft =    {xxl: 2, xl: 2, lg: 3, md:3,sm: 4, xs: 24 };
-    const responsiveContent = {xxl: 10, xl:11, lg: 13,md:13, sm: 18, xs: 0};
-    const responsiveRight =   {xxl: 4, xl: 5, lg: 6, md:6,sm: 0, xs: 0 };
-    const rightFlag =         {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0}
+    const leftFlag =          {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 1}
+    const responsiveLeft =    {xxl: 2, xl: 2, lg: 3, md:3,sm: 3, xs: 4 };
+    const responsiveContent = {xxl: 10, xl:11, lg: 13,md:13, sm: 12, xs: 11};
+    const responsiveRight =   {xxl: 4, xl: 5, lg: 6, md:6,sm: 7, xs: 7 };
+    const rightFlag =         {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 1}
     return(
         <Header className="header-contaienr">
             <Row>
                 <Col {...leftFlag}/>
                 <Col {...responsiveLeft}>
-                    <HeaderLogo  navList={navList}/>
+                    <HeaderLogo />
                 </Col>
                 <Col {...responsiveContent}>
                     <div className="header-content">
+                        <div>
+                            <MiniNav navList={navList} />
+                        </div>
                         <Nav navList={navList}/>
                         <Search />
                     </div>

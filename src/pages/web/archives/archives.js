@@ -16,7 +16,6 @@ class Archives extends Component {
     getArchiveList(){
         api.archiveList().then(res => {
             const {code, msg, data} = res;
-            console.log(data);
             if (code === 0) {
                 this.setState({
                     list:data

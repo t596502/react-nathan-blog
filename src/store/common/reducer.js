@@ -6,6 +6,7 @@ const defaultState ={
     colorMap: {},
     loginModalVisible: false,
     registerModalVisible: false,
+    windowWidth:0
 };
 
 export default (state=defaultState,action)=>{
@@ -15,6 +16,8 @@ export default (state=defaultState,action)=>{
             return {...state,[`${payload}ModalVisible`]:true};
         case CONSTANTS.COM_CLOSE_AUTHMODAL:
             return {...state,[`${payload}ModalVisible`]:false};
+        case CONSTANTS.COM_SET_WINDOW_WIDTH:
+            return { ...state, windowWidth: payload }
         case CONSTANTS.COMMON_COLOR_MAP:
             const list = groupBy(payload, item => item.userId)
             const colorList = state.colorList

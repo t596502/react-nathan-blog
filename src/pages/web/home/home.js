@@ -1,6 +1,6 @@
 import React, { Component,Fragment } from 'react'
 import {withRouter} from 'react-router-dom'
-import { Layout,Row,Col,Tags ,Spin} from 'antd';
+import { Layout,Row,Col,Empty ,Spin} from 'antd';
 import ArticleList from '@/components/web/list/list';
 import InfiniteScroll from 'react-infinite-scroller'
 import Sider from '../../../components/web/sider'
@@ -9,8 +9,8 @@ import * as api from '@/request/request'
 import {translateMarkdown,decodeQuery} from '@/lib'
 import './index.less'
 const rightFlag =         {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0};
-const responsiveContent = {xxl: 12, xl:13, lg: 17,md:17, sm: 22, xs: 24};
-const responsiveArticle = {xxl: 4, xl: 5, lg: 5, md:5,sm: 0, xs: 0 };
+const responsiveContent = {xxl: 12, xl:13, lg: 17,md:16, sm: 22, xs: 24};
+const responsiveArticle = {xxl: 4, xl: 5, lg: 5, md:6,sm: 0, xs: 0 };
 const leftFlag =          {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0};
 
 
@@ -18,7 +18,7 @@ const pageSize = 5
 
 const NoDataDesc = () => (
     <Fragment>
-        不存在标题中含有 <span className="keyword"></span> 的文章！
+        不存在标题中含有的文章！
     </Fragment>
 );
 
@@ -35,7 +35,6 @@ class Home extends Component{
     currentPage = 1
     componentWillMount() {
         this.query = decodeQuery(this.props.location.search)
-        console.log(this.props);
         if(!this.state.list.length)this.getArticleList()
         this.getHotArticleList()
         this.getCategoryList()
@@ -112,7 +111,6 @@ class Home extends Component{
         // console.log(id);
     };
     handleInfiniteOnLoad=()=>{
-        console.log(222);
         if(this.state.hasMore){
             this.setState({
                 loading:true
@@ -155,10 +153,10 @@ class Home extends Component{
                                     <Spin />
                                 </div>
                             )}
+                        {list.length  === 0 && <Empty style={{marginTop:'15em'}} description={<NoDataDesc />}/>}
                         {/*{list.length  > 0 ? (<Pagination showQuickJumper current={currentPage} pageSize={pageSize} total={total} onChange={this.onChange} />) : (*/}
                             {/*<div className="no-data">*/}
-                                {/*<Empty description={<NoDataDesc />} />*/}
-                            {/*</div>*/}
+                        {/*</div>*/}
                         {/*)}*/}
                     </Col>
                     <Col {...responsiveArticle}>

@@ -1,8 +1,12 @@
 import React, {Component, lazy, Suspense} from 'react'
 import {Route, Switch} from 'react-router-dom'
 import {Layout, Spin} from 'antd';
+import {connect} from "react-redux";
 import './index.less'
 import Headernav from '@/components/web/header'
+import { setWindowWidth } from '@/store/common/actions'
+import {throttle} from '@/lib/utils'
+
 // import Home from '@/pages/web/home/home'
 // import Article from '@/pages/web/article/article'
 // import About from '@/pages/web/about/about'
@@ -19,17 +23,32 @@ function loading() {
         <Spin style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)'}} tip="Loading..." size="large" />
     )
 }
+@connect(
+    null,
+    { setWindowWidth }
+)
 class Index extends Component {
     state = {};
 
-    componentWillMount() {
-
+    componentDidMount() {
+        const windowWidth = document.getElementsByTagName('body')[0].clientWidth;
+        this.props.setWindowWidth(windowWidth)
+        window.addEventListener('resize',this.handleHeight);
+    }
+    componentWillUnmount() {
+        window.addEventListener('resize',this.handleHeight);
     }
 
+    handleHeight =throttle(()=>{
+        const windowWidth = document.documentElement.clientWidth;
+        console.log(windowWidth,this);
+        this.props.setWindowWidth(windowWidth)
+
+    },500)
     render() {
         return (
             <Layout className="app-container">
-                <Headernav/>
+                <Headernav />
                 {/*<Home />*/}
                 <Suspense fallback={loading()}>
                 <Switch>

@@ -12,3 +12,7 @@ export const generateColorMap = commentList => ({
     type: CONSTANTS.COMMON_COLOR_MAP,
     payload: commentList // 生成头像的颜色匹配
 })
+
+export const setWindowWidth = (clientWidth) => {
+    return { type: CONSTANTS.COM_SET_WINDOW_WIDTH, payload: clientWidth }
+}

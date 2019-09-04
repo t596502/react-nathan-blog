@@ -1,11 +1,7 @@
-
+import layout from './layout'
+import http from './http'
 export default {
-    LAYOUT_HOME:{
-        xxl: {span: 12, push: 4},
-        xl: {span: 13, push: 3},
-        lg: {span: 17, push: 1},
-        md: {span: 22, push: 1},
-        sm: {span: 22, push: 1},
-        xs: {span: 24},
-    }
+    LAYOUT_HOME:layout.LAYOUT_HOME,
+    HOST_NAME:http.HOST_NAME
 }
+

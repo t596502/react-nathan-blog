@@ -5,9 +5,11 @@ import { Base64 } from 'js-base64';
 import {logout} from '@/store/user/actions'
 import {openAuthModal} from '@/store/common/actions'
 import reduxAction from '@/store'
+import config from '@/config'
 const instance = axios.create({
     // baseURL:'http://api.nathan-tai.top',
-    baseURL:'http://localhost:3000',
+    // baseURL:'http://localhost:3000',
+    baseURL:config.PATH_NAME,
     timeout:10000
 });
 let timer;

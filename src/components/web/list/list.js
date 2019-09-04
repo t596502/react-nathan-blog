@@ -1,23 +1,29 @@
-import {Divider, Icon} from "antd";
-import React,{Component} from "react";
+import {Divider, Icon,Tag} from "antd";
+import React from "react";
 import moment from 'moment'
 
 
-class ArticleList extends Component{
-
-    render() {
-        const {list} = this.props;
+function ArticleList(props){
         return(
             <ul className="ul-list">
-                {list.map(item => (
-                    <li key={item.id} className="ul-list-item">
+                {props.list.map(item => (
+                    <li key={item.id} className="ul-list-item" onClick={(e) => props.jumpTo(item.id,e)}>
                         <div className='label'>
                             <span className='label-c'>分类</span>
-                            <span className='label-con'>{item.category[0].name}</span>
+                            <span className='label-con' onClick={(e)=>props.categoryTo(item.category[0].name,e)}>{item.category[0].name}</span>
                             <span className='label-time'>{moment(item.created_at).fromNow()}</span>
+                            <div>
+                                {item.tags.length && item.tags.map(item=>(
+                                    <Tag
+                                        onClick={(e)=>props.tagsTo(item.name,e)}
+                                        className='label-tags'
+                                        key={item.name}
+                                        color="green">{item.name}</Tag>
+                                ))}
+                            </div>
                         </div>
                         <Divider orientation="left">
-                            <span className="title" onClick={() => this.props.jumpTo(item.id)}>{item.title}</span>
+                            <span className="title">{item.title}</span>
                         </Divider>
                         <div className='article-bottom'>
                             {/*
@@ -31,7 +37,7 @@ class ArticleList extends Component{
                             </div>
                             <div className='list-item-action'>
                                 <Icon className='icon-like' theme='outlined' type="eye" style={{ marginRight: 5 }} />
-                                <span className="nums">{item.read_nums[0].read_num}</span>
+                                <span className="nums">{item.read_nums}</span>
                             </div>
                             <div className='list-item-action'>
                                 <Icon className='icon-like' theme='outlined' type="message" style={{ marginRight: 5 }} />
@@ -42,7 +48,7 @@ class ArticleList extends Component{
                 ))}
             </ul>
         )
-    }
+    // }
 
 
 }

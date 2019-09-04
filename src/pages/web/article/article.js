@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux";
-import {Row, Col, Typography, Icon, message, BackTop} from 'antd';
+import {Row, Col, Typography, Icon, message, BackTop,Tag,Divider} from 'antd';
 
 import Comment from './comment/comment'
 import Navigation from './navigation'
@@ -49,8 +49,8 @@ class Article extends Component {
             const {code, msg, data} = res;
             if (code === 0) {
                 data.content = translateMarkdown(data.content);
-                data.read_nums = data.read_nums ? data.read_nums[0].read_num : 1;
                 data.contentLength = data.content.length
+                data.category = data.category[0].name
                 this.setState({
                     detail: data
                 })
@@ -87,6 +87,21 @@ class Article extends Component {
             }
         })
     };
+    categoryTo=(category)=>{
+        this.props.history.push(`/?page=1&category=${category}`)
+    };
+    tagsToList=(tag,e)=>{
+        this.props.history.push(`/?page=1&tag=${tag}`)
+    };
+    updateLength=(length)=>{
+        console.log(length);
+        this.setState(state =>{
+            state.detail['comment_nums'] = length
+            return{
+                "detail['comment_nums']":state.detail
+            }
+        })
+    };
     render() {
         const {detail,likeStatus} = this.state;
         const {username}= this.props;
@@ -108,6 +123,29 @@ class Article extends Component {
                                             <span style={{margin:'0 8px'}}>阅读 {detail.read_nums}</span>
                                             <span style={{marginRight:'8px'}}>喜欢 {detail.favor_nums}</span>
                                             <span>评论 {detail.comment_nums}</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <Icon type="tags" />
+                                            {detail.tags.length && detail.tags.map((item)=>(
+                                                <div key={item.name} style={{display:'inline-block'}}>
+                                                    <Divider type="vertical" />
+                                                    <Tag
+                                                        onClick={(e)=>this.tagsToList(item.name,e)}
+                                                        style={{marginRight:'0'}}
+                                                        color="green">{item.name}</Tag>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div>
+                                            <Icon type="folder" />
+                                            <Divider type="vertical" />
+                                            <Tag
+                                                onClick={()=>{this.categoryTo(detail.category)}}
+                                                style={{marginRight:'0'}}
+                                                key={detail.category}
+                                                color="#108ee9">{detail.category}</Tag>
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +175,7 @@ class Article extends Component {
                         <div className="article-comments">
                             <section className="comments">
                                 <Title className='title' level={4} type='secondary'>评论</Title>
-                                <Comment articleId={detail.id} commentsLength={detail.comment_nums || 0} />
+                                <Comment articleId={detail.id} updateLength={this.updateLength} commentsLength={detail.comment_nums || 0} />
                             </section>
                         </div>
                     </Col>

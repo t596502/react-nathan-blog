@@ -21,8 +21,8 @@ class Manage extends Component {
         this.getArticleList(this.query)
     }
 
-    getArticleList = ({page = currentPage,title,category})=>{
-        api.articleList({page:page,pageSize,title,category}).then(res=>{
+    getArticleList = ({page = currentPage,title,category,tag})=>{
+        api.articleList({page:page,pageSize,title,category,tag}).then(res=>{
             const {data,code} = res;
             if(code === 0){
                 this.setState({
@@ -37,9 +37,10 @@ class Manage extends Component {
         data = data.map(item=>({
             title:item.title,
             category:item.category,
+            tags:item.tags,
             created_at:item.created_at,
             updated_at:item.updated_at,
-            read_nums:item.read_nums[0].read_num,
+            read_nums:item.read_nums,
             comment_nums:item.comment_nums,
             key:item.id,
             id:item.id
@@ -63,6 +64,21 @@ class Manage extends Component {
                     <div>
                         {record.category.map((item,index)=>(
                             <Tag color="#87d068" key={index}>{item.name}</Tag>
+                        ))}
+                    </div>
+                )
+            }
+        },
+        {
+            title:'标签',
+            dataIndex: 'tags',
+            key:'tags',
+            render: (text, record) => {
+
+                return (
+                    <div>
+                        {record.tags.map((item,index)=>(
+                            <Tag color="red" key={index}>{item.name}</Tag>
                         ))}
                     </div>
                 )

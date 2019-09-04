@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { Tag, Input, Tooltip, Icon } from 'antd';
 const {CheckableTag} = Tag;
-
+const RADIO = 'radio'
 
 class EditableTagGroup extends Component {
     state = {
@@ -51,13 +51,39 @@ class EditableTagGroup extends Component {
     handleChange = (value,checked) => {
 
         // const {selectedList} =  this.state;
-        let selectedList = []
         // if(selectedList.indexOf(value) > -1){
         //     selectedList.splice(selectedList.indexOf(value), 1);
         // }else {
         //     selectedList.push(value)
         // }
-        selectedList.push(value)
+        console.log(value,checked);
+        let selectedList =[]
+        if(this.props.type === RADIO){
+            selectedList =[]
+        }else {
+
+            let isSelect = true
+
+            // if(!isSelect) return
+            // if(this.state.selectedList)
+            selectedList = this.state.selectedList
+        }
+
+        if(checked){
+            selectedList.push(value);
+        }else {
+            let {selectedList:tagsList} = this.state;
+            if(tagsList.length){
+                tagsList.forEach((item,index)=>{
+                    if(item === value){
+                        selectedList.splice(index,1);
+                        console.log(selectedList);
+                    }
+                })
+
+            }
+        }
+
         this.setState({
             selectedList
         });

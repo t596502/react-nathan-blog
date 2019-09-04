@@ -1,16 +1,9 @@
 import React, {Component} from 'react'
 import './about.less'
-// import AuthorAvatar from '@/components/web/AuthorAvatar'
-import {connect} from 'react-redux'
-// import { generateColorMap } from '@/redux/common/actions'
 
-import {Row, Col, Divider, Alert, Icon, Descriptions} from 'antd'
+import {Row, Col, Divider, Alert, Descriptions} from 'antd'
 import CONFIG from '@/config'
 
-// @connect(
-//     null,
-//     { generateColorMap }
-// )
 class About extends Component {
     state = {
         userInfo: [

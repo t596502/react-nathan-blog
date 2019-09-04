@@ -17,9 +17,7 @@ export const articleDetail = (params)=>{
     return axios.get('/article/detail',{params})
 };
 
-export const categoryList = (params)=>{
-    return axios.get('/category/getList',{params})
-};
+
 
 export const articleLike = (params)=>{
     return axios.post('/favor/like',params)
@@ -50,4 +48,10 @@ export const articleUpdate = (params)=>{
 };
 export const articleDelete = (params)=>{
     return axios.delete('/article/delete',{params})
+};
+export const categoryList = (params)=>{
+    return axios.get('/category/getList',{params})
+};
+export const tagList = (params)=>{
+    return axios.get('/tags/getList',{params})
 };

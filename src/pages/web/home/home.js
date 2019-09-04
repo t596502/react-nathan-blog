@@ -30,14 +30,15 @@ class Home extends Component{
         hotList:[],
         loading:false,
         hasMore: true,
-        categoryList:[]
+        tagsList:[]
     };
     currentPage = 1
     componentWillMount() {
-        this.query = decodeQuery(this.props.location.search)
-        if(!this.state.list.length)this.getArticleList()
-        this.getHotArticleList()
-        this.getCategoryList()
+        this.query = decodeQuery(this.props.location.search);
+        const {list,tagsList,hotList} = this.state;
+        if(!list.length)this.getArticleList();
+        if(!hotList.length) this.getHotArticleList();
+        if(!tagsList.length) this.getTagsList()
     }
     componentWillReceiveProps(nextProps){
         this.currentPage = 1
@@ -98,9 +99,19 @@ class Home extends Component{
             }
         })
     }
-    jumpTo=(id)=>{
+    jumpTo=(id,e)=>{
+        e.stopPropagation()
         this.props.history.push(`/article/${id}`)
     };
+    categoryTo=(category,e)=>{
+        e.stopPropagation()
+        this.props.history.push(`/?page=1&category=${category}`)
+    };
+    tagsTo=(tag,e)=>{
+        e.stopPropagation()
+        this.props.history.push(`/?page=1&tag=${tag}`)
+    };
+
     /*
     onChange=(pageNumber)=>{
         this.currentPage = pageNumber;
@@ -119,21 +130,21 @@ class Home extends Component{
         }
 
     };
-    getCategoryList(){
-        api.categoryList().then(res=>{
+    getTagsList(){
+        api.tagList().then(res=>{
             console.log(res);
             const {code,data} = res
             if(code === 0){
                 let newList = data.sort((a,b) => b.count - a.count).map(item=> item.name);
                 newList = newList.slice(0,10);
                 this.setState({
-                    categoryList:newList
+                    tagsList:newList
                 })
             }
         })
     }
     render() {
-        const {list,hotList,categoryList} = this.state;
+        const {list,hotList,tagsList} = this.state;
         return(
             <Layout style={{height: 'calc(100vh - 64px)',overflowY: 'auto'}}>
                 <InfiniteScroll
@@ -147,7 +158,7 @@ class Home extends Component{
                     <Col {...leftFlag}/>
                     <Col {...responsiveContent}  className="content-inner-wrapper home">
 
-                            <ArticleList list={list} jumpTo={(e)=> this.jumpTo(e)} />
+                            <ArticleList list={list} categoryTo={this.categoryTo} tagsTo={this.tagsTo} jumpTo={this.jumpTo}  />
                             {this.state.loading &&  (
                                 <div className="demo-loading-container">
                                     <Spin />
@@ -160,7 +171,7 @@ class Home extends Component{
                         {/*)}*/}
                     </Col>
                     <Col {...responsiveArticle}>
-                        <Sider categoryList={categoryList} hotList={hotList} jumpTo={(e)=> this.jumpTo(e)} />
+                        <Sider tagsList={tagsList} hotList={hotList} jumpTo={(e)=> this.jumpTo(e)} />
                     </Col>
                     <Col {...rightFlag}/>
                 </Row>

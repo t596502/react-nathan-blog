@@ -155,12 +155,23 @@ class NathanComment extends Component {
         }))
     }
 
-    getComments(id) {
+    getComments(id,isUpdateLength =false) {
 
         api.commentsList({article_id: id}).then(res => {
             const {data, code, msg} = res;
             if (code === 0) {
                 let comments = this.filterComments(data);
+
+                let comTotal = 0;
+                if(comments.length && isUpdateLength){
+                    comments.forEach(item=>{
+                        if(item.replyList.length){
+                            comTotal += item.replyList.length
+                        }
+                    })
+                    comTotal += comments.length
+                    this.props.updateLength(comTotal)
+                }
                 this.setState({
                     comments: comments
                 })
@@ -186,7 +197,7 @@ class NathanComment extends Component {
                     commentsId: '',
                     replyId: ''
                 });
-                this.getComments(this.articleId);
+                this.getComments(this.articleId,true);
                 message.success('回复成功！')
             } else {
                 message.error(msg)
@@ -217,8 +228,9 @@ class NathanComment extends Component {
                     submitting: false,
                     value: ''
                 });
+                this.updateComment = true
                 message.success('评论成功！')
-                this.getComments(this.articleId)
+                this.getComments(this.articleId,true)
             } else {
                 this.setState({
                     submitting: false,

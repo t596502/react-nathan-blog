@@ -1,5 +1,5 @@
 export default {
-    LAYOUT_HOME:{
+    HOST_NAME:{
         xxl: {span: 12, push: 4},
         xl: {span: 13, push: 3},
         lg: {span: 17, push: 1},

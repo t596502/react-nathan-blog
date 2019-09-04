@@ -14,9 +14,11 @@ class edit extends Component {
         value: '',
         title: '',
         categoryList: [],
+        tagsList:[],
         isCreate: true, // 组件状态 更新或创建
     };
     category = '';
+    tag='';
     componentDidMount() {
         console.log(this.props)
         this.smde = new SimpleMDE({
@@ -26,8 +28,12 @@ class edit extends Component {
             previewRender: translateMarkdown
         });
 
-        if(this.props.location.state) this.getArticleDetail(this.props.location.state.id);
-        else this.getCategoryList();
+        if(this.props.location.state){
+            this.getArticleDetail(this.props.location.state.id);
+        } else {
+            this.getCategoryList();
+            this.getTagList();
+        }
     }
     getArticleDetail(id) {
         api.articleDetail({id}).then(res => {
@@ -35,9 +41,11 @@ class edit extends Component {
             if(code === 0){
                 this.smde.value(data.content);
                 const categoryList = data.category.map(d => d.name)
+                const tagsList = data.tags.map(d => d.name)
                 this.setState({
                     title: data.title,
                     categoryList,
+                    tagsList,
                     isCreate:false
                 })
             }
@@ -56,6 +64,20 @@ class edit extends Component {
             }
         })
     }
+    getTagList(){
+        api.tagList().then(res=>{
+            console.log(res);
+            const {code,data} = res
+            if(code === 0){
+                let newList = data.sort((a,b) => b.count - a.count).map(item=> item.name);
+                newList = newList.slice(0,10);
+                this.setState({
+                    tagsList:newList
+                })
+            }
+        })
+    }
+
     handleChange = (e) => {
         this.setState({
             [e.target.name]:e.target.value
@@ -65,7 +87,8 @@ class edit extends Component {
         const params = {
             title:this.state.title,
             content:this.smde.value(),
-            category:this.category
+            category:this.category,
+            tag:this.tag,
         };
         let hashName;
         if(!this.state.isCreate) {
@@ -93,11 +116,14 @@ class edit extends Component {
         })
     };
     categorySelect = (value)=>{
-        console.log(value);
         this.category = value.join()
     };
+    tagsSelect = (value) =>{
+        this.tag = value.join()
+    };
+
     render() {
-        const {value,title,categoryList,isCreate} = this.state
+        const {value,title,categoryList,isCreate,tagsList} = this.state
         return (
             <div className="add-article">
                 <div className="title">
@@ -112,7 +138,10 @@ class edit extends Component {
                 </div>
                 <br/>
                 <div className="title">
-                    <span>分类:</span><TnTags selectFn={(e)=>this.categorySelect(e)} list={categoryList}/>
+                    <span>分类:</span><TnTags type='radio' selectFn={(e)=>this.categorySelect(e)} list={categoryList}/>
+                </div>
+                <div className="title">
+                    <span>标签:</span><TnTags type='checkbox' selectFn={(e)=>this.tagsSelect(e)} list={tagsList}/>
                 </div>
                 <br/>
                 <textarea id="editor" defaultValue={value} />

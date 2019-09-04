@@ -21,7 +21,7 @@
         color: #1890ff;
       }
 
-      .label-c, .label-con {
+      .label-c, .label-con,.label-time {
         &::after {
           content: "·";
           color: rgb(178, 186, 194);
@@ -36,6 +36,9 @@
           color: #1890ff;
 
         }
+      }
+      .label-tags{
+        cursor: pointer;
       }
 
     }
@@ -77,15 +80,6 @@
         display: flex;
 
         .list-item-action {
-          //display: flex;
-          //align-items: center;
-          //justify-content: center;
-          //position: relative;
-          //padding: 0 .8rem;
-          //width: 3em;
-          //height: 1.8rem;
-          //font-size: 0.9rem;
-          //border: 1px solid #edeeef;
           color: #b2bac2;
           border-radius: 1px;
           //cursor: pointer;
@@ -97,11 +91,6 @@
           .nums {
             margin-top: 0.1rem;
           }
-
-          //&:hover {
-          //  color: #48b2ff;
-          //  background: #f7f8fa;
-          //}
         }
 
       }

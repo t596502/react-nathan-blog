@@ -8,12 +8,12 @@ import {Divider, Tag, Icon} from 'antd'
 @withRouter
 class BolgSider extends Component {
 
-    searchTag = (category) => {
-        this.props.history.push(`/?page=1&category=${category}`)
+    searchTag = (tag) => {
+        this.props.history.push(`/?page=1&tag=${tag}`)
     }
 
     render() {
-        const {hotList, categoryList} = this.props;
+        const {hotList, tagsList} = this.props;
         return (
             <div className="sider-wrapper">
                 <img
@@ -55,11 +55,11 @@ class BolgSider extends Component {
                 <Divider>
                     <Icon type="folder" />
                     <span style={{marginLeft:'3px'}}>
-                    分类
+                    全部标签
                     </span>
                 </Divider>
                 <div className="tags-content">
-                    {categoryList.length ? categoryList.map((item, index) => (
+                    {tagsList.length ? tagsList.map((item, index) => (
                         <Tag onClick={() => this.searchTag(item)} className='tags' key={index} color={'#eee'}>
                             <a href="javascript:;">{item}</a>
                         </Tag>

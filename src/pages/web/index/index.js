@@ -41,7 +41,6 @@ class Index extends Component {
 
     handleHeight =throttle(()=>{
         const windowWidth = document.documentElement.clientWidth;
-        console.log(windowWidth,this);
         this.props.setWindowWidth(windowWidth)
 
     },500)

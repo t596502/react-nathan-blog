@@ -8,6 +8,7 @@ import Sider from '../../../components/web/sider'
 import * as api from '@/request/request'
 import {translateMarkdown,decodeQuery} from '@/lib'
 import './index.less'
+import {connect} from "react-redux";
 const rightFlag =         {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 0};
 const responsiveContent = {xxl: 12, xl:13, lg: 17,md:16, sm: 22, xs: 24};
 const responsiveArticle = {xxl: 4, xl: 5, lg: 5, md:6,sm: 0, xs: 0 };
@@ -21,7 +22,12 @@ const NoDataDesc = () => (
         不存在标题中含有的文章！
     </Fragment>
 );
-
+@connect(
+    state=>({
+        authorInfo:state.user.authorInfo
+    }),
+    null
+)
 class Home extends Component{
 
     state ={
@@ -86,7 +92,7 @@ class Home extends Component{
     }
     getHotArticleList(){
         api.articleList({is_hot:1}).then(res=>{
-            const {code,data,msg} =res
+            const {code,data} =res
             if(code === 0){
                 const hotList = data.rows;
                 hotList.map(item=>({
@@ -110,16 +116,6 @@ class Home extends Component{
     tagsTo=(tag,e)=>{
         e.stopPropagation()
         this.props.history.push(`/?page=1&tag=${tag}`)
-    };
-
-    /*
-    onChange=(pageNumber)=>{
-        this.currentPage = pageNumber;
-        this.getArticleList()
-    };
-    */
-    controlLike=(id)=>{
-        // console.log(id);
     };
     handleInfiniteOnLoad=()=>{
         if(this.state.hasMore){
@@ -145,6 +141,7 @@ class Home extends Component{
     }
     render() {
         const {list,hotList,tagsList} = this.state;
+        const {authorInfo} = this.props
         return(
             <Layout style={{height: 'calc(100vh - 64px)',overflowY: 'auto'}}>
                 <InfiniteScroll
@@ -171,7 +168,11 @@ class Home extends Component{
                         {/*)}*/}
                     </Col>
                     <Col {...responsiveArticle}>
-                        <Sider tagsList={tagsList} hotList={hotList} jumpTo={(e)=> this.jumpTo(e)} />
+                        <Sider
+                            avatar={authorInfo.avatar}
+                            tagsList={tagsList}
+                            hotList={hotList}
+                            jumpTo={(e)=> this.jumpTo(e)} />
                     </Col>
                     <Col {...rightFlag}/>
                 </Row>

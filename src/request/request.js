@@ -37,6 +37,9 @@ export const commentsList = (params)=>{
 export const replyCommentsAdd = (params)=>{
     return axios.post('/reply/add',params)
 };
+export const getAuthorInfo = ()=>{
+    return axios.get('/private/getInfo')
+};
 
 
 // 后台
@@ -54,4 +57,8 @@ export const categoryList = (params)=>{
 };
 export const tagList = (params)=>{
     return axios.get('/tags/getList',{params})
+};
+
+export const upload = (params)=>{
+    return axios.post('/private/sumbit',params)
 };

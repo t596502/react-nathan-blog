@@ -1,11 +1,14 @@
 import React, {Component, lazy, Suspense} from 'react'
-import {Route, Switch} from 'react-router-dom'
+import {Route, Switch,withRouter} from 'react-router-dom'
 import {Layout, Spin} from 'antd';
 import {connect} from "react-redux";
 import './index.less'
 import Headernav from '@/components/web/header'
 import { setWindowWidth } from '@/store/common/actions'
+import { getAuthorInfo } from '@/store/user/actions'
 import {throttle} from '@/lib/utils'
+import Sider from "../home/home";
+import AuthModal from '@/components/web/authModal';
 
 // import Home from '@/pages/web/home/home'
 // import Article from '@/pages/web/article/article'
@@ -25,10 +28,16 @@ function loading() {
 }
 @connect(
     null,
-    { setWindowWidth }
+    (dispath)=>({
+        setWindowWidth:()=>dispath (setWindowWidth()),
+        getAuthorInfo:()=>dispath(getAuthorInfo())
+    })
 )
 class Index extends Component {
     state = {};
+    componentWillMount() {
+        this.props.getAuthorInfo()
+    }
 
     componentDidMount() {
         const windowWidth = document.getElementsByTagName('body')[0].clientWidth;
@@ -36,7 +45,7 @@ class Index extends Component {
         window.addEventListener('resize',this.handleHeight);
     }
     componentWillUnmount() {
-        window.addEventListener('resize',this.handleHeight);
+        window.removeEventListener('resize',this.handleHeight);
     }
 
     handleHeight =throttle(()=>{
@@ -48,6 +57,7 @@ class Index extends Component {
         return (
             <Layout className="app-container">
                 <Headernav />
+                <AuthModal />
                 {/*<Home />*/}
                 <Suspense fallback={loading()}>
                 <Switch>

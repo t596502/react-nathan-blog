@@ -17,7 +17,7 @@ class BolgSider extends Component {
         return (
             <div className="sider-wrapper">
                 <img
-                    src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558009723215&di=ac185a0bc5712cff3349ccc8b0c588dd&imgtype=0&src=http%3A%2F%2Fimg.article.pchome.net%2F00%2F25%2F12%2F61%2Fpic_lib%2Fs960x639%2Fawrbz_27s960x639.jpg'
+                    src={this.props.avatar}
                     className="sider-avatar" alt=""/>
                 <h2 className="name">Nathan</h2>
                 <div className="title">前端探索</div>

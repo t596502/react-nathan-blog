@@ -10,9 +10,6 @@ import {connect} from "react-redux";
 )
 class MiniNav extends Component {
     state = {visible: false};
-    componentWillUnmount() {
-        console.log(this.props.pathname);
-    }
 
     onClose = () => {
         this.setState({

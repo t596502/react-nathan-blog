@@ -42,18 +42,27 @@ class LoginModel extends Component {
     }
     handleSubmit = e => {
         e.preventDefault();
+
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 const {type} = this.state;
+                this.setState({
+                    btnLoading:true
+                });
                 if(type === 'login'){
                     Object.assign(values,{type:101})
                 }
-                console.log(type);
                 this.props[type](values).then(res=>{
+                    this.setState({
+                        btnLoading:false
+                    })
                     if(res.code === 0){
                         this.props.closeAuthModal(type)
                     }
+                }).catch(err=>{
+                    this.setState({
+                        btnLoading:false
+                    })
                 });
             }
         });
@@ -81,7 +90,7 @@ class LoginModel extends Component {
     };
     handleClose = () => this.props.closeAuthModal(this.state.type)
     render() {
-        const {type} =this.state
+        const {type,btnLoading} =this.state
         const { loginModalVisible, registerModalVisible } = this.props
         const { getFieldDecorator, getFieldsError } = this.props.form;
 
@@ -156,7 +165,7 @@ class LoginModel extends Component {
                     </Form.Item>
                     }
                         <div style={{marginTop:'10px'}}>
-                            <Button block type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
+                            <Button loading={btnLoading} block type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
                                 {type !== 'login' ? '注册' :'登录'}
                             </Button>
                         </div>

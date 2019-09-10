@@ -1,33 +1,81 @@
 import React, { Component } from 'react'
-import {Route,Switch,Redirect} from 'react-router-dom'
 import './settingUp.less'
 import { Upload, Icon,Form,Input,Divider,Button,message } from 'antd';
-
+import * as api from '@/request/request'
 const { TextArea } = Input;
 function getBase64(img, callback) {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
 }
-function beforeUpload(file) {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-        message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
+function beforeUpload() {
+
+    return false;
 }
 
 class SettingUp extends Component {
     state = {
         loading: false,
+        authorInfo:{}
     };
+    componentWillMount() {
+        console.log(222);
+        api.getAuthorInfo().then(res=>{
+            const {data,code,msg} = res
+            if(code === 0){
+                this.setState({
+                    authorInfo:data,
+                    imageUrl:data.avatar
+                })
+            }else {
+                message.warning(msg)
+            }
+        })
+    }
 
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            const {authorInfo} = this.state
+            if (!err) {
+                const uploadImg = new FormData();
+                console.log(values);
+                if(values.upload){
+                    const file =values.upload[values.upload.length-1]
+                    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+                    if (!isJpgOrPng) {
+                        message.error('You can only upload JPG/PNG file!');
+                        return
+                    }
+                    const isLt2M = file.size / 1024 / 1024 < 2;
+                    if (!isLt2M) {
+                        message.error('Image must smaller than 2MB!');
+                        return
+                    }
+                    uploadImg.append('avatar', file.originFileObj);
+                }
+                for(let key in values){
+                    if(key !== 'upload'){
+                        uploadImg.append(key, values[key]);
+                    }
+                }
+                if(authorInfo.id){                // 更新信息
+                    uploadImg.append('id',authorInfo.id)
+                }
+                api.upload(uploadImg).then(res=>{
+                    const {code,msg} = res
+                    if(code === 0){
+                        message.success('提交成功')
+                    }else {
+                        message.warning(msg)
+                    }
+                })
+            }
+        });
+    };
     handleChange = info => {
         console.log(info);
+        /*
         if (info.file.status === 'uploading') {
             this.setState({ loading: true });
             return;
@@ -40,12 +88,19 @@ class SettingUp extends Component {
                     loading: false,
                 }),
             );
-        }
+        }*/
+
+        getBase64(info.fileList[info.fileList.length-1].originFileObj, imageUrl =>
+            this.setState({
+                imageUrl,
+                loading: false,
+            }),
+        );
     };
     normFile = e => {
-        console.log('Upload event:', e);
         if (Array.isArray(e)) {
-            return e;
+            console.log(e);
+            return e.file[e.file];
         }
         return e && e.fileList;
     };
@@ -73,51 +128,73 @@ class SettingUp extends Component {
                 },
             },
         };
+        const config = {
+            rules: [{ required: true, message: 'Please input!' }],
+        };
         const uploadButton = (
             <div>
                 <Icon type={this.state.loading ? 'loading' : 'plus'} />
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
-        const { imageUrl } = this.state;
+        const { imageUrl,authorInfo } = this.state;
         return (
             <div className='user-container'>
-                <h1>基本</h1>
                 <Form {...formItemLayout} className='form-wrapper' onSubmit={this.handleSubmit}>
                     <div className='top'>
                         <section>
                             <Form.Item label="昵称">
-                                {getFieldDecorator('nickname')(<Input />)}
+                                {getFieldDecorator('nickname', {
+                                    initialValue:authorInfo.nickname,
+                                    ...config
+                                })(<Input />)}
                             </Form.Item>
                             <Form.Item label="学历">
-                                {getFieldDecorator('diploma')(<Input />)}
+                                {getFieldDecorator('education',{
+                                    initialValue:authorInfo.education,
+                                    ...config
+                                })(<Input />)}
                             </Form.Item>
                             <Form.Item label="E-mail">
-                                {getFieldDecorator('email')(<Input />)}
+                                {getFieldDecorator('email',{
+                                    initialValue:authorInfo.email,
+                                    ...config
+                                })(<Input />)}
                             </Form.Item>
                             <Form.Item label="城市">
-                                {getFieldDecorator('city')(<Input />)}
+                                {getFieldDecorator('city',{
+                                    initialValue:authorInfo.city,
+                                    ...config
+                                })(<Input />)}
                             </Form.Item>
                             <Form.Item label="联系方式">
-                                {getFieldDecorator('contact')(<Input />)}
+                                {getFieldDecorator('contact',{
+                                    initialValue:authorInfo.contact,
+                                    ...config
+                                })(<Input />)}
                             </Form.Item>
                             <Form.Item label="个人技能">
-                                {getFieldDecorator('contact')(<TextArea rows={4} />)}
+                                {getFieldDecorator('skill',{
+                                    initialValue:authorInfo.skill,
+                                    ...config
+                                })(<TextArea rows={4} />)}
                             </Form.Item>
                             <Form.Item label="其它">
-                                {getFieldDecorator('contact')(<TextArea rows={4} />)}
+                                {getFieldDecorator('other',{
+                                    initialValue:authorInfo.other,
+                                    ...config
+                                })(<TextArea rows={4} />)}
                             </Form.Item>
                         </section>
                         <Divider type="vertical" style={{height:'100vh'}} />
                         <section>
-                            <Form.Item label="Upload" extra="longgggg">
+                            <Form.Item label="Upload">
                                 {getFieldDecorator('upload', {
                                     valuePropName: 'fileList',
-                                    getValueFromEvent: this.normFile,
+                                    getValueFromEvent: this.normFile
                                 })(
                                     <Upload
                                         name="logo"
-                                        action="/upload.do"
                                         listType="picture-card"
                                         showUploadList={false}
                                         className="avatar-uploader"
@@ -132,7 +209,6 @@ class SettingUp extends Component {
                             </Form.Item>
                         </section>
                     </div>
-
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
                             保存

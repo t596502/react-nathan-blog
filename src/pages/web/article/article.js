@@ -98,7 +98,7 @@ class Article extends Component {
         this.setState(state =>{
             state.detail['comment_nums'] = length
             return{
-                "detail['comment_nums']":state.detail
+                "detail['comment_nums']":length
             }
         })
     };

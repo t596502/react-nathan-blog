@@ -4,11 +4,16 @@ import store from 'store'
 const defaultState ={
     auth:0,
     username:'',
+    authorInfo:{}
 };
 
 const userInfo = store.get('userInfo');
+const authorInfo = store.get('authorInfo');
 if(!!userInfo && userInfo !=='undefind'){
     Object.assign(defaultState,{...userInfo})
+}
+if(!!authorInfo && authorInfo !=='undefind'){
+    Object.assign(defaultState,{authorInfo})
 }
 
 export default (state = defaultState,action)=>{
@@ -18,7 +23,11 @@ export default (state = defaultState,action)=>{
             return {...state,username,auth};
         case CONSTANTS.USER_LOGOUT:
 
-            return {auth:0,username:'',token:''};
+            console.log(state.authorInfo);
+            return {...state,auth:0,username:'',token:''};
+        case CONSTANTS.USER_AUTHOR_INFO:
+            const authorInfo = action.payload
+            return {...state,authorInfo};
         default:
             return state
     }

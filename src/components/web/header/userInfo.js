@@ -4,11 +4,15 @@ import {connect} from "react-redux";
 import { openAuthModal } from '@/store/common/actions'
 import { logout } from '@/store/user/actions'
 
-import AuthModal from '../authModal';
 
 
 @connect(
-    state=>({username:state.user.username,windowWidth:state.common.windowWidth}),
+    state=>({
+        username:state.user.username,
+        authorInfo:state.user.authorInfo,
+        auth:state.user.auth,
+        windowWidth:state.common.windowWidth
+    }),
     {openAuthModal,logout}
 )
 class UserInfo extends Component{
@@ -24,7 +28,11 @@ class UserInfo extends Component{
     );
 
     render() {
-        const {username,windowWidth} = this.props
+        const {username,windowWidth,authorInfo,auth} = this.props;
+        const avatarProps ={
+            style:auth <10 ? { color: '#f56a00', backgroundColor: '#fde3cf' } : {},
+            src:auth >=10 ? authorInfo.avatar : '',
+        }
         return(
             <div>
                 {!username ? (
@@ -37,14 +45,13 @@ class UserInfo extends Component{
                                 <Button type="danger" size={windowWidth > 600 ? 'default' : 'small'} ghost onClick={()=>{this.props.openAuthModal('register')}}>注册</Button>
                             </div>
                         </div>
-                        <AuthModal />
                     </div>
                     ): (
                     <Dropdown
                         overlay={this.menu()}
                         placement="bottomLeft"
                     >
-                        <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{username}</Avatar>
+                        <Avatar {...avatarProps} >{auth <10 ? username : ''}</Avatar>
                     </Dropdown>
                     )
                 }

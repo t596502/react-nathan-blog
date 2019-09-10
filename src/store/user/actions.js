@@ -39,3 +39,19 @@ export const register = (params) => {
         })
     }
 };
+
+export const getAuthorInfo = () =>{
+    return dispatch => {
+        return api.getAuthorInfo().then(res => {
+            const {code, msg,data} = res;
+            if (code === 0){
+                store.set('authorInfo', data)
+                dispatch({
+                    type: CONSTANTS.USER_AUTHOR_INFO,
+                    payload: data
+                });
+            } else message.error(msg)
+            return res
+        })
+    }
+}

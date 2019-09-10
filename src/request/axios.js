@@ -1,16 +1,15 @@
 import axios from 'axios'
-import {message,Spin} from 'antd'
+import {message} from 'antd'
 import store from 'store'
 import { Base64 } from 'js-base64';
 import {logout} from '@/store/user/actions'
 import {openAuthModal} from '@/store/common/actions'
 import reduxAction from '@/store'
 import config from '@/config'
+
 const instance = axios.create({
-    // baseURL:'http://api.nathan-tai.top',
-    // baseURL:'http://localhost:3000',
-    baseURL:config.PATH_NAME,
-    timeout:10000
+    baseURL:config.HOST_NAME,
+    timeout:20000
 });
 let timer;
 //拦截请求
@@ -20,7 +19,9 @@ instance.interceptors.request.use(
         if (userInfo) {
             config.headers['Authorization'] = _cecode(userInfo.token)
         }
-        Spin.setDefaultIndicator()
+        if(config.url==='/privateInfo/submit'){
+            config.headers['Content-Type']= 'multipart/form-data'
+        }
         return config
     },
     error => {

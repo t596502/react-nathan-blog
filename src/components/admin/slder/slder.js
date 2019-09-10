@@ -26,15 +26,14 @@ class SideBarNav extends Component {
                             <Link to='/admin/article/manage'>文章列表</Link>
                         </Menu.Item>
                     </SubMenu>
-                    <Menu.Item key="3">
-                        <Icon type="upload"/>
-                        <span className="nav-text">用户管理</span>
-                    </Menu.Item>
                     <SubMenu key="user" title={
-                        <span><Icon type="user"/><span>个人中心</span></span>
+                        <span><Icon type="user"/><span>用户管理</span></span>
                     }>
                         <Menu.Item key="settingUp">
                             <Link to='/admin/user/settingUp'>个人设置</Link>
+                        </Menu.Item>
+                        <Menu.Item key="list">
+                            <Link to='/admin/user/list'>我的用户</Link>
                         </Menu.Item>
                     </SubMenu>
                 </Menu>

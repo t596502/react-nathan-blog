@@ -6,6 +6,9 @@ export const login = (params)=>{
 export const register = (params)=>{
     return axios.post('/user/register',params)
 };
+export const getCode = (params)=>{
+    return axios.post('/user/verify',params)
+};
 
 export const articleList = (params)=>{
     return axios.get('/article/list',{params})
@@ -61,4 +64,7 @@ export const tagList = (params)=>{
 
 export const upload = (params)=>{
     return axios.post('/private/sumbit',params)
+};
+export const userList = (params)=>{
+    return axios.post('/user/list',params)
 };

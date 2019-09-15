@@ -5,6 +5,7 @@ import AdminHeader from '../../../components/admin/header/header'
 import AddArticle from '../article/edit/edit'
 import Manage from '../article/manage/manage'
 import SettingUp from '../user/settingUp/settingUp'
+import MyUser from '../user/myUser/myUser'
 import './aHome.less'
 import { Layout, Menu, Icon } from 'antd';
 
@@ -38,6 +39,7 @@ class aHome extends Component {
                                 <Route path='/admin/article/edit' exact component={AddArticle} />
                                 <Route path='/admin/article/manage' exact component={Manage} />
                                 <Route path='/admin/user/settingUp' exact component={SettingUp} />
+                                <Route path='/admin/user/myUser' exact component={MyUser} />
                             </Switch>
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>Ant Design ©2019 Created by nathantai@outlook.com</Footer>

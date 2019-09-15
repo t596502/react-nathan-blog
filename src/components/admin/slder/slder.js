@@ -33,7 +33,7 @@ class SideBarNav extends Component {
                             <Link to='/admin/user/settingUp'>个人设置</Link>
                         </Menu.Item>
                         <Menu.Item key="list">
-                            <Link to='/admin/user/list'>我的用户</Link>
+                            <Link to='/admin/user/myUser'>我的用户</Link>
                         </Menu.Item>
                     </SubMenu>
                 </Menu>

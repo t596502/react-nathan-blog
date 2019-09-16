@@ -94,7 +94,6 @@ class Article extends Component {
         this.props.history.push(`/?page=1&tag=${tag}`)
     };
     updateLength=(length)=>{
-        console.log(length);
         this.setState(state =>{
             state.detail['comment_nums'] = length
             return{

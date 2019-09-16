@@ -20,7 +20,6 @@ class edit extends Component {
     category = '';
     tag='';
     componentDidMount() {
-        console.log(this.props)
         this.smde = new SimpleMDE({
             element: document.getElementById('editor').childElementCount,
             autofocus: true,
@@ -53,7 +52,6 @@ class edit extends Component {
     }
     getCategoryList(){
         api.categoryList().then(res=>{
-            console.log(res);
             const {code,data} = res
             if(code === 0){
                 let newList = data.sort((a,b) => b.count - a.count).map(item=> item.name);

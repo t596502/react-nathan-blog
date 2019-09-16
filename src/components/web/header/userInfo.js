@@ -1,9 +1,9 @@
-import React, {Component,lazy} from 'react';
+import React, {Component} from 'react';
 import { Button ,Dropdown,Menu,Avatar} from 'antd'
 import {connect} from "react-redux";
 import { openAuthModal } from '@/store/common/actions'
 import { logout } from '@/store/user/actions'
-
+import AuthorAvatar from '../authorAvatar/authorAvatar'
 
 
 @connect(
@@ -11,7 +11,8 @@ import { logout } from '@/store/user/actions'
         username:state.user.username,
         authorInfo:state.user.authorInfo,
         auth:state.user.auth,
-        windowWidth:state.common.windowWidth
+        windowWidth:state.common.windowWidth,
+        colorMap: state.common.colorMap
     }),
     {openAuthModal,logout}
 )
@@ -27,10 +28,15 @@ class UserInfo extends Component{
         </Menu>
     );
 
+    authAvatar = (auth,username,colorMap) => {
+        return auth < 10 ? <Avatar style={{color: '#fff', backgroundColor: colorMap[username]}}>{username}</Avatar> :
+            <AuthorAvatar />
+    }
+
     render() {
-        const {username,windowWidth,authorInfo,auth} = this.props;
+        const {username,windowWidth,authorInfo,auth,colorMap} = this.props;
         const avatarProps ={
-            style:auth <10 ? { color: '#f56a00', backgroundColor: '#fde3cf' } : {},
+            style:auth <10 ? { color: '#fff', backgroundColor: colorMap[username] } : {},
             src:auth >=10 ? authorInfo.avatar : '',
         }
         return(
@@ -50,8 +56,15 @@ class UserInfo extends Component{
                     <Dropdown
                         overlay={this.menu()}
                         placement="bottomLeft"
+                        trigger={['click', 'hover']}
                     >
-                        <Avatar {...avatarProps} >{auth <10 ? username : ''}</Avatar>
+                        {/*{this.authAvatar(auth,username,colorMap)}*/}
+                        {/*<Avatar {...avatarProps} >{auth <10 ? username : ''}</Avatar>*/}
+                            <div>
+                                {this.authAvatar(auth,username,colorMap)}
+                            </div>
+
+
                     </Dropdown>
                     )
                 }

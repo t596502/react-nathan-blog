@@ -65,7 +65,6 @@
         font-weight: 600;
         line-height: 1.2;
         cursor: pointer;
-
         &:hover {
           color: #48b2ff;
         }
@@ -141,6 +140,14 @@
     font-size: 18px;
     font-weight: bold;
     color: #f00;
+  }
+
+  @media screen and (max-width: 736px) {
+    .ant-divider-inner-text {
+      max-width: calc(100vw - 40px);
+      overflow: auto;
+      text-overflow: ellipsis;
+    }
   }
 }
 

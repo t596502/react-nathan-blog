@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
+import AuthorAvatar from '@/components/web/authorAvatar/authorAvatar'
 
 import {Comment, Avatar, Form, Button, List, Input, message} from 'antd';
 import moment from 'moment';
-import {openAuthModal} from '@/store/common/actions'
+import {openAuthModal,generateColorMap} from '@/store/common/actions'
 import * as api from "@/request/request";
+import {translateMarkdown} from "@/lib";
 import './comment.less'
 
 const {TextArea} = Input;
@@ -16,6 +18,7 @@ const CommentList = ({children, comments, openReply, commentsId, replyChange, re
         if (comments.type === 'comment') openReply(comments.type, comments.id)
         else openReply(comments.type, comments.commentId, comments.replyId)
     }
+    const content = translateMarkdown(comments.content).replace(/\sonclick=(.*)">/g,'>') // 阻止点击事件！！！
 
     return (
         <Comment
@@ -34,7 +37,8 @@ const CommentList = ({children, comments, openReply, commentsId, replyChange, re
                 // <Avatar style={{ backgroundColor: '#87d068' }}>{comments.author}</Avatar>
             }
             content={
-                <p>{comments.content}</p>
+                <p className="article-detail"
+                    dangerouslySetInnerHTML={{ __html: content }} />
             }
             datetime={<span>{comments.datetime}</span>}
         >
@@ -43,7 +47,7 @@ const CommentList = ({children, comments, openReply, commentsId, replyChange, re
             <div className="reply-form">
                 <TextArea value={replyContent} onChange={replyChange} placeholder={`回复${comments.author}...`}/>
                 <div className="reply-form-controls">
-                    <span className="tip">Ctrl or ⌘ + Enter</span>
+                    <span className="tip">支持 Markdown 语法</span>
                     <Button onClick={replySubmit} disabled={!replyContent.length} htmlType="submit" type="primary">
                         评论
                     </Button>
@@ -60,10 +64,13 @@ const Editor = ({onChange, onSubmit, submitting, value}) => (
             <TextArea placeholder="写下你的评论..." rows={3} onChange={onChange} value={value}/>
         </Form.Item>
         <Form.Item>
-            <Button htmlType="submit" disabled={value.length === 0} loading={submitting} onClick={onSubmit}
-                    type="primary">
-                提交
-            </Button>
+            <div className='comments-submit'>
+                <span className="tip">支持 Markdown 语法</span>
+                <Button htmlType="submit" disabled={value.length === 0} loading={submitting} onClick={onSubmit}
+                        type="primary">
+                    提交
+                </Button>
+            </div>
         </Form.Item>
     </div>
 );
@@ -73,7 +80,7 @@ const Editor = ({onChange, onSubmit, submitting, value}) => (
         username: state.user.username,
         colorMap: state.common.colorMap
     }),
-    {openAuthModal}
+    {openAuthModal,generateColorMap}
 )
 class NathanComment extends Component {
     state = {
@@ -88,7 +95,7 @@ class NathanComment extends Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.articleId !== nextProps.articleId) {
             this.articleId = nextProps.articleId;
-            this.getComments(this.articleId)
+            this.getComments(this.articleId,false,true)
         }
     }
 
@@ -97,26 +104,33 @@ class NathanComment extends Component {
     }
 
     renderAvatar = item => {
-        const {colorMap} = this.props
-        return (
-            <Avatar
-                className="user-avatar"
-                size="default"
-                style={{backgroundColor: colorMap[item.author] || '#ccc'}}>
-                {item.author}
-            </Avatar>
-        )
+        const {colorMap} = this.props;
+        const author = item.author || item
+        if(author === 'nathan'){
+            return(
+                <AuthorAvatar />
+            )
+        }else {
+            return(
+                <Avatar
+                    className="user-avatar"
+                    size="default"
+                    style={{backgroundColor: colorMap[author] || '#ccc'}}>
+                    {author}
+                </Avatar>
+            )
+        }
     }
     replyChange = (e) => {
         this.setState({replyContent: e.target.value})
     };
     replyKeyUp = (e) => {
+        console.log(e);
         if (e.ctrlKey && e.keyCode === 13) {
             this.replySubmit()
         }
     };
     openReply = (type, commentsId, replyId) => {
-        console.log(type, commentsId, replyId);
         if(!this.isLogin()) return;
         if (type === 'comment') {
             this.setState({
@@ -134,14 +148,12 @@ class NathanComment extends Component {
     };
 
     filterComments(data) {
-        let avatar = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
         return data.map(item => ({
             id: item.id,
             type: COMMENT,
             author: item.comment_username,
             content: item.content,
             datetime: moment(item.created_at).fromNow(),
-            avatar,
             replyList: item.replyList.length ? item.replyList.map(item => ({
                 commentId: item.comment_id,
                 replyId: item.reply_id,
@@ -150,18 +162,17 @@ class NathanComment extends Component {
                 parentAuthor: item.reply_parent_username,
                 content: item.reply_content,
                 datetime: moment(item.reply_created_at).fromNow(),
-                avatar,
             })) : []
         }))
     }
 
-    getComments(id,isUpdateLength =false) {
+    getComments(id,isUpdateLength =false,setAuthorColor) {
 
         api.commentsList({article_id: id}).then(res => {
             const {data, code, msg} = res;
             if (code === 0) {
                 let comments = this.filterComments(data);
-
+                if(setAuthorColor) this.props.generateColorMap(comments)
                 let comTotal = 0;
                 if(comments.length && isUpdateLength){
                     comments.forEach(item=>{
@@ -259,12 +270,7 @@ class NathanComment extends Component {
         return (
             <div className="wrapper">
                 <Comment
-                    avatar={
-                        <Avatar
-                            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                            alt="Han Solo"
-                        />
-                    }
+                    avatar={this.renderAvatar(this.props.username)}
                     content={
                         <Editor
                             onChange={this.handleChange}

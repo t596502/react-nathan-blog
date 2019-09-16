@@ -3,7 +3,7 @@ import {Route, Switch, withRouter} from 'react-router-dom'
 import {Layout, Spin} from 'antd';
 import {connect} from "react-redux";
 import './index.less'
-// import Headernav from '@/components/web/header'
+import Headernav from '@/components/web/header'
 import {setWindowWidth} from '@/store/common/actions'
 import {getAuthorInfo} from '@/store/user/actions'
 import {throttle} from '@/lib/utils'
@@ -11,7 +11,6 @@ import Sider from "../home/home";
 // import AuthModal from '@/components/web/authModal';
 
 const AuthModal = lazy(() => import('@/components/web/authModal'))
-const Headernav = lazy(() => import('@/components/web/header'))
 const Archives = lazy(() => import('@/pages/web/archives/archives'))
 const Home = lazy(() => import('@/pages/web/home/home'))
 const Article = lazy(() => import('@/pages/web/article/article'))
@@ -58,10 +57,9 @@ class Index extends Component {
     render() {
         return (
             <Layout className="app-container">
-
+                <Headernav/>
                 {/*<Home />*/}
                 <Suspense fallback={loading()}>
-                    <Headernav/>
                     <AuthModal/>
                     <Switch>
 

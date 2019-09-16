@@ -46,9 +46,8 @@ const NathanHeader = ()=>{
                 </Col>
                 <Col {...responsiveContent}>
                     <div className="header-content">
-                        <div>
+
                             <MiniNav navList={navList} />
-                        </div>
                         <Nav navList={navList}/>
                         <Search />
                     </div>

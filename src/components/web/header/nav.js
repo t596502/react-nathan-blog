@@ -7,11 +7,6 @@ import {connect} from "react-redux";
 //onClick={()=>this.goNav(item.link)}
 @withRouter
 class Nav extends Component {
-    // goNav = (link)=>{
-    //     console.log(this.props.history);
-    //     this.props.history.push(link);
-    //     if(this.props.hideNav) this.props.hideNav()
-    // };
     render() {
         const {navList} = this.props;
 

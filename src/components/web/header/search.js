@@ -11,7 +11,6 @@ class Search extends Component{
         })
     };
     onBlur = (e)=>{
-        // console.log('onBlur',e.target.value);
     };
     handlePressEnter =()=>{
         const {keyword} = this.state

@@ -64,7 +64,6 @@ class edit extends Component {
     }
     getTagList(){
         api.tagList().then(res=>{
-            console.log(res);
             const {code,data} = res
             if(code === 0){
                 let newList = data.sort((a,b) => b.count - a.count).map(item=> item.name);
@@ -96,7 +95,6 @@ class edit extends Component {
             hashName = CREATE
         }
         api[hashName](params).then(res=>{
-            console.log(res);
             const {code,data,msg} = res;
             if(code === 0){
                 Modal.confirm({

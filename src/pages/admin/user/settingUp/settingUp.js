@@ -19,7 +19,6 @@ class SettingUp extends Component {
         authorInfo:{}
     };
     componentWillMount() {
-        console.log(222);
         api.getAuthorInfo().then(res=>{
             const {data,code,msg} = res
             if(code === 0){
@@ -39,7 +38,6 @@ class SettingUp extends Component {
             const {authorInfo} = this.state
             if (!err) {
                 const uploadImg = new FormData();
-                console.log(values);
                 if(values.upload){
                     const file =values.upload[values.upload.length-1]
                     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -74,7 +72,6 @@ class SettingUp extends Component {
         });
     };
     handleChange = info => {
-        console.log(info);
         /*
         if (info.file.status === 'uploading') {
             this.setState({ loading: true });
@@ -99,7 +96,6 @@ class SettingUp extends Component {
     };
     normFile = e => {
         if (Array.isArray(e)) {
-            console.log(e);
             return e.file[e.file];
         }
         return e && e.fileList;

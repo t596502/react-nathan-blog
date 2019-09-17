@@ -23,7 +23,6 @@ export default (state = defaultState,action)=>{
             return {...state,username,auth};
         case CONSTANTS.USER_LOGOUT:
 
-            console.log(state.authorInfo);
             return {...state,auth:0,username:'',token:''};
         case CONSTANTS.USER_AUTHOR_INFO:
             const authorInfo = action.payload

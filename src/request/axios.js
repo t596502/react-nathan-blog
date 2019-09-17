@@ -47,7 +47,6 @@ instance.interceptors.response.use(
             if (err && err.response) {
                 switch (err.response.status) {
                     case 400:
-                        console.log(err.response);
                         message.error('错误请求')
                         break
                     case 401:

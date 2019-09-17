@@ -125,7 +125,6 @@ class NathanComment extends Component {
         this.setState({replyContent: e.target.value})
     };
     replyKeyUp = (e) => {
-        console.log(e);
         if (e.ctrlKey && e.keyCode === 13) {
             this.replySubmit()
         }

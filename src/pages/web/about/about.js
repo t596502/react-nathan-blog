@@ -21,7 +21,6 @@ class About extends Component {
 
     componentDidMount() {
         // this.fetchList()
-        console.log(this.props.authorInfo.nickname);
         const {nickname,education,email,city,contact,skill,other} = this.props.authorInfo
         const skillArr = skill.split('|');
         const otherArr = other.split('|');

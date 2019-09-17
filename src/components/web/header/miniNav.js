@@ -22,7 +22,6 @@ class MiniNav extends Component {
         });
     };
     hideNav = () => {
-        console.log(this.props.location.pathname);
         this.setState({
             visible: false,
         });

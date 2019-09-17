@@ -130,12 +130,10 @@ class Manage extends Component {
                 const params = {
                     id:articleId
                 };
-                console.log('articleId',articleId);
                 api.articleDelete(params).then(res=>{
                     const {code,msg} = res
                     if(code === 0){
                         message.warning(`成功删除${title}`);
-                        console.log(this.query);
                         this.getArticleList(this.query)
                     }else {
                         message.error(msg);

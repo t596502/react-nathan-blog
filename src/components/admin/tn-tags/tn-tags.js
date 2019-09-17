@@ -56,7 +56,6 @@ class EditableTagGroup extends Component {
         // }else {
         //     selectedList.push(value)
         // }
-        console.log(value,checked);
         let selectedList =[]
         if(this.props.type === RADIO){
             selectedList =[]
@@ -77,7 +76,6 @@ class EditableTagGroup extends Component {
                 tagsList.forEach((item,index)=>{
                     if(item === value){
                         selectedList.splice(index,1);
-                        console.log(selectedList);
                     }
                 })
 

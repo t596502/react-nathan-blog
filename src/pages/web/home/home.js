@@ -128,7 +128,6 @@ class Home extends Component{
     };
     getTagsList(){
         api.tagList().then(res=>{
-            console.log(res);
             const {code,data} = res
             if(code === 0){
                 let newList = data.sort((a,b) => b.count - a.count).map(item=> item.name);

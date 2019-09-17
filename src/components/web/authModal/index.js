@@ -54,7 +54,6 @@ class LoginModel extends Component {
                     this.setState({
                         countdown:--countdown
                     });
-                    console.log(this.state.countdown)
                     if(countdown <= 0){
                         this.setState({
                             countdown:TIME
@@ -64,7 +63,6 @@ class LoginModel extends Component {
                 },1000)
                 getCode(values).then(res=>{
                     const {msg,code} = res
-                    console.log(res);
                     if(code === 0){
                         message.success(msg)
 

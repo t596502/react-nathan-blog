@@ -57,7 +57,6 @@ class RegistrationForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 this.props.history.push(`/admin/article/manage/?page=1&title=${values.title || ''}&category=${values.category || ''}&tag=${values.tag || ''}`)
             }
         });

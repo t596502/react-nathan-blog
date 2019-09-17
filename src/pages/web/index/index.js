@@ -62,11 +62,10 @@ class Index extends Component {
                 <Suspense fallback={loading()}>
                     <AuthModal/>
                     <Switch>
-
-                        <Route exact path='/article/:id' component={Article}/>
-                        <Route exact path='/about' component={About}/>
-                        <Route exact path='/archives' component={Archives}/>
                         <Route exact path='/' component={Home}/>
+                        <Route path='/article/:id' component={Article}/>
+                        <Route path='/about' component={About}/>
+                        <Route path='/archives' component={Archives}/>
 
                     </Switch>
                 </Suspense>

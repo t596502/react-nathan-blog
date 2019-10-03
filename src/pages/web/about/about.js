@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import * as api from '@/request/request'
 import './about.less'
 
 import {Row, Col, Divider, Alert, Descriptions} from 'antd'

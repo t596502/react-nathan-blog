@@ -5,7 +5,7 @@ import {Icon, Layout, Avatar, Dropdown, Menu} from "antd";
 import {logout} from '@/store/user/actions'
 import './header.less'
 
-const {Header, Sider, Content, Footer} = Layout;
+const {Header} = Layout;
 
 @connect(state => ({
         authorInfo: state.user.authorInfo,

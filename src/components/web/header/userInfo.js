@@ -34,11 +34,8 @@ class UserInfo extends Component{
     }
 
     render() {
-        const {username,windowWidth,authorInfo,auth,colorMap} = this.props;
-        const avatarProps ={
-            style:auth <10 ? { color: '#fff', backgroundColor: colorMap[username] } : {},
-            src:auth >=10 ? authorInfo.avatar : '',
-        }
+        const {username,windowWidth,auth,colorMap} = this.props;
+
         return(
             <div>
                 {!username ? (

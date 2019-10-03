@@ -103,7 +103,6 @@ class Article extends Component {
     };
     render() {
         const {detail,likeStatus} = this.state;
-        const {username}= this.props;
         return (
             <div className="article">
                 <Row >

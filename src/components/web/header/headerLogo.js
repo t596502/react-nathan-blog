@@ -1,7 +1,5 @@
 import React,{Component} from 'react'
-import { Icon, Drawer } from 'antd'
 import { Link } from 'react-router-dom'
-import Nav from "./nav";
 
 class headerLogo extends Component{
     state = { visible: false, placement: 'left' };

@@ -19,9 +19,7 @@ export default (state=defaultState,action)=>{
         case CONSTANTS.COM_SET_WINDOW_WIDTH:
             return { ...state, windowWidth: payload }
         case CONSTANTS.COMMON_COLOR_MAP:
-            console.log(payload);
             const list = groupBy(payload, item => item.author)
-            console.log(list);
             const colorList = state.colorList
             let colorMap = {};
             list.forEach(item => {

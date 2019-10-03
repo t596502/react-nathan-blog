@@ -1,5 +1,5 @@
 import React, {Component, lazy, Suspense} from 'react'
-import {Route, Switch, withRouter} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import {Layout, Spin} from 'antd';
 import {connect} from "react-redux";
 import './index.less'
@@ -7,15 +7,9 @@ import Headernav from '@/components/web/header'
 import {setWindowWidth} from '@/store/common/actions'
 import {getAuthorInfo} from '@/store/user/actions'
 import {throttle} from '@/lib/utils'
-import Sider from "../home/home";
-// import AuthModal from '@/components/web/authModal';
 
 const AuthModal = lazy(() => import('@/components/web/authModal'))
-const Archives = lazy(() => import('@/pages/web/archives/archives'))
-const Home = lazy(() => import('@/pages/web/home/home'))
-const Article = lazy(() => import('@/pages/web/article/article'))
 
-const About = lazy(() => import('@/pages/web/about/about'))
 
 function loading() {
     return (
@@ -61,13 +55,7 @@ class Index extends Component {
                 {/*<Home />*/}
                 <Suspense fallback={loading()}>
                     <AuthModal/>
-                    <Switch>
-                        <Route exact path='/' component={Home}/>
-                        <Route path='/article/:id' component={Article}/>
-                        <Route path='/about' component={About}/>
-                        <Route path='/archives' component={Archives}/>
-
-                    </Switch>
+                    {this.props.children}
                 </Suspense>
             </Layout>
         )

@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import {Route,Switch,Redirect} from 'react-router-dom'
+import {Route,Switch} from 'react-router-dom'
 import SideBarNav from '../../../components/admin/slder/slder'
 import AdminHeader from '../../../components/admin/header/header'
-import AddArticle from '../article/edit/edit'
-import Manage from '../article/manage/manage'
-import SettingUp from '../user/settingUp/settingUp'
-import MyUser from '../user/myUser/myUser'
+
 import './aHome.less'
-import { Layout, Menu, Icon } from 'antd';
+import { Layout } from 'antd';
 
 const { Sider, Content,Footer } = Layout;
 
@@ -35,12 +32,7 @@ class aHome extends Component {
                     <Layout>
                         <AdminHeader collapsed={this.state.collapsed} onToggle={this.toggle}/>
                         <Content style={{ margin: '24px 16px 0',background:'#fff' }}>
-                            <Switch>
-                                <Route path='/admin/article/edit' exact component={AddArticle} />
-                                <Route path='/admin/article/manage' exact component={Manage} />
-                                <Route path='/admin/user/settingUp' exact component={SettingUp} />
-                                <Route path='/admin/user/myUser' exact component={MyUser} />
-                            </Switch>
+                            {this.props.children}
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>Ant Design ©2019 Created by nathantai@outlook.com</Footer>
                     </Layout>

@@ -61,7 +61,6 @@ class EditableTagGroup extends Component {
             selectedList =[]
         }else {
 
-            let isSelect = true
 
             // if(!isSelect) return
             // if(this.state.selectedList)

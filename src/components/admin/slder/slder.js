@@ -10,7 +10,7 @@ class SideBarNav extends Component {
         return (
             <div className="logo" style={{height: '100vh'}}>
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-                    <Menu.Item key="home">
+                    <Menu.Item key="admin">
                         <Icon type="home"/>
                         <span className="nav-text">
                             <Link to='/admin'>首页</Link>
@@ -32,7 +32,7 @@ class SideBarNav extends Component {
                         <Menu.Item key="settingUp">
                             <Link to='/admin/user/settingUp'>个人设置</Link>
                         </Menu.Item>
-                        <Menu.Item key="list">
+                        <Menu.Item key="userList">
                             <Link to='/admin/user/myUser'>我的用户</Link>
                         </Menu.Item>
                     </SubMenu>

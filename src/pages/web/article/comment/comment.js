@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import AuthorAvatar from '@/components/web/authorAvatar/authorAvatar'
 
-import {Comment, Avatar, Form, Button, List, Input, message} from 'antd';
+import {Comment, Avatar, Form, Button, Input, message} from 'antd';
 import moment from 'moment';
 import {openAuthModal,generateColorMap} from '@/store/common/actions'
 import * as api from "@/request/request";
@@ -150,14 +150,14 @@ class NathanComment extends Component {
         return data.map(item => ({
             id: item.id,
             type: COMMENT,
-            author: item.comment_username,
+            author: item.comment_username || '',
             content: item.content,
             datetime: moment(item.created_at).fromNow(),
             replyList: item.replyList.length ? item.replyList.map(item => ({
                 commentId: item.comment_id,
                 replyId: item.reply_id,
                 type: REPLY,
-                author: item.reply_username,
+                author: item.reply_username || '',
                 parentAuthor: item.reply_parent_username,
                 content: item.reply_content,
                 datetime: moment(item.reply_created_at).fromNow(),
@@ -182,9 +182,15 @@ class NathanComment extends Component {
                     comTotal += comments.length
                     this.props.updateLength(comTotal)
                 }
+                // this.setState({
+                //     comments: comments
+                // })
                 this.setState({
-                    comments: comments
+                    comments
                 })
+
+            }else {
+                console.log(msg);
             }
 
         })
@@ -283,9 +289,9 @@ class NathanComment extends Component {
                 {comments.length > 0 &&
                 comments.map((item, index) => (
                     <CommentList commentsId={commentsId} comments={item} key={index} {...commonProps}>
-                        {item.replyList.length > 0 ? item.replyList.map((item, index) => (
-                            <CommentList replyId={replyId} comments={item} key={index} {...commonProps} />
-                        )) : ''}
+                        {item.replyList.map((child, index) => (
+                            <CommentList replyId={replyId} comments={child} key={index} {...commonProps} />
+                        ))}
                     </CommentList>
                 ))}
             </div>

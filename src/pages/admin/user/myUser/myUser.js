@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
-import {Table, Tag, message} from "antd";
-import { Link, } from 'react-router-dom'
+import {Table} from "antd";
 import * as api from "@/request/request";
-import {decodeQuery} from '@/lib'
 
 
 let currentPage = 1
@@ -39,11 +37,6 @@ class myUser extends Component {
             dataIndex: 'email',
             key:'email'
         },
-        // {
-        //     title: '评论数',
-        //     dataIndex: 'comment_nums',
-        //     key:'comment_nums',
-        // },
         {
             title: '创建时间',
             dataIndex: 'created_at',
@@ -61,6 +54,7 @@ class myUser extends Component {
             <div className='manage'>
                 <div style={{paddingTop:'10px'}}>
                     <Table
+                        rowKey='id'
                         columns={this.getColumns()}
                         dataSource={userList}
                         bordered

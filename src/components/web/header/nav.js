@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Icon, Menu} from "antd";
 import { withRouter,Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
 //                         {/*<Link onClick={()=>this.props.hideNav()} to={item.link}>*/}
 //onClick={()=>this.goNav(item.link)}
 @withRouter

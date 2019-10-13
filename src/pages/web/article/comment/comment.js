@@ -45,7 +45,7 @@ const CommentList = ({children, comments, openReply, commentsId, replyChange, re
 
             {((commentsId === comments.id && comments.type === 'comment') || (replyId === comments.replyId && comments.type === 'reply')) &&
             <div className="reply-form">
-                <TextArea value={replyContent} onChange={replyChange} placeholder={`回复${comments.author}...`}/>
+                <TextArea autosize value={replyContent} onChange={replyChange} placeholder={`回复${comments.author}...`}/>
                 <div className="reply-form-controls">
                     <span className="tip">支持 Markdown 语法</span>
                     <Button onClick={replySubmit} disabled={!replyContent.length} htmlType="submit" type="primary">

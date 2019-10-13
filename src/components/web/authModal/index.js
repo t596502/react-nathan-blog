@@ -14,10 +14,10 @@ let timer = null;
 const TIME = 61
 const FormItemLayout = {
     labelCol: {
-        span: 6
+        span: 5
     },
     wrapperCol: {
-        span: 18
+        span: 19
     }
 }
 
@@ -137,7 +137,7 @@ class LoginModel extends Component {
                 visible={loginModalVisible || registerModalVisible}
                 onCancel={() => this.handleClose(type)}
             >
-                <Form layout="horizontal" {...FormItemLayout} layout="inline" onSubmit={this.handleSubmit}>
+                <Form layout="horizontal" {...FormItemLayout} onSubmit={this.handleSubmit}>
                     {type !== 'login' &&
                     <Form.Item label='邮箱'>
                         {getFieldDecorator('email', {

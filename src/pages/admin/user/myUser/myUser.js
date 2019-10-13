@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Table} from "antd";
+import {Table,Card} from "antd";
 import * as api from "@/request/request";
 
 
@@ -53,13 +53,17 @@ class myUser extends Component {
         return (
             <div className='manage'>
                 <div style={{paddingTop:'10px'}}>
-                    <Table
-                        rowKey='id'
-                        columns={this.getColumns()}
-                        dataSource={userList}
-                        bordered
-                        pagination={{total:total,current:currentPage,pageSize:pageSize,onChange:(page)=>this.pageChange(page)}}
-                    />
+                    <Card title="我的用户" bordered={false}>
+                        <Table
+                            rowKey='username'
+                            columns={this.getColumns()}
+                            dataSource={userList}
+                            bordered
+                            pagination={{total:total,current:currentPage,pageSize:pageSize,onChange:(page)=>this.pageChange(page)}}
+                        />
+                    </Card>
+
+
                 </div>
 
 

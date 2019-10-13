@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './settingUp.less'
-import { Upload, Icon,Form,Input,Divider,Button,message } from 'antd';
+import { Upload, Icon,Form,Input,Divider,Button,message,Card } from 'antd';
 import * as api from '@/request/request'
 const { TextArea } = Input;
 function getBase64(img, callback) {
@@ -136,81 +136,83 @@ class SettingUp extends Component {
         const { imageUrl,authorInfo } = this.state;
         return (
             <div className='user-container'>
-                <Form {...formItemLayout} className='form-wrapper' onSubmit={this.handleSubmit}>
-                    <div className='top'>
-                        <section>
-                            <Form.Item label="昵称">
-                                {getFieldDecorator('nickname', {
-                                    initialValue:authorInfo.nickname,
-                                    ...config
-                                })(<Input />)}
-                            </Form.Item>
-                            <Form.Item label="学历">
-                                {getFieldDecorator('education',{
-                                    initialValue:authorInfo.education,
-                                    ...config
-                                })(<Input />)}
-                            </Form.Item>
-                            <Form.Item label="E-mail">
-                                {getFieldDecorator('email',{
-                                    initialValue:authorInfo.email,
-                                    ...config
-                                })(<Input />)}
-                            </Form.Item>
-                            <Form.Item label="城市">
-                                {getFieldDecorator('city',{
-                                    initialValue:authorInfo.city,
-                                    ...config
-                                })(<Input />)}
-                            </Form.Item>
-                            <Form.Item label="联系方式">
-                                {getFieldDecorator('contact',{
-                                    initialValue:authorInfo.contact,
-                                    ...config
-                                })(<Input />)}
-                            </Form.Item>
-                            <Form.Item label="个人技能">
-                                {getFieldDecorator('skill',{
-                                    initialValue:authorInfo.skill,
-                                    ...config
-                                })(<TextArea rows={4} />)}
-                            </Form.Item>
-                            <Form.Item label="其它">
-                                {getFieldDecorator('other',{
-                                    initialValue:authorInfo.other,
-                                    ...config
-                                })(<TextArea rows={4} />)}
-                            </Form.Item>
-                        </section>
-                        <Divider type="vertical" style={{height:'100vh'}} />
-                        <section>
-                            <Form.Item label="Upload">
-                                {getFieldDecorator('upload', {
-                                    valuePropName: 'fileList',
-                                    getValueFromEvent: this.normFile
-                                })(
-                                    <Upload
-                                        name="logo"
-                                        listType="picture-card"
-                                        showUploadList={false}
-                                        className="avatar-uploader"
-                                        beforeUpload={beforeUpload}
-                                        onChange={this.handleChange}
-                                    >
+                <Card title='个人设置' >
+                    <Form {...formItemLayout} className='form-wrapper' onSubmit={this.handleSubmit}>
+                        <div className='top'>
+                            <section>
+                                <Form.Item label="昵称">
+                                    {getFieldDecorator('nickname', {
+                                        initialValue:authorInfo.nickname,
+                                        ...config
+                                    })(<Input />)}
+                                </Form.Item>
+                                <Form.Item label="学历">
+                                    {getFieldDecorator('education',{
+                                        initialValue:authorInfo.education,
+                                        ...config
+                                    })(<Input />)}
+                                </Form.Item>
+                                <Form.Item label="E-mail">
+                                    {getFieldDecorator('email',{
+                                        initialValue:authorInfo.email,
+                                        ...config
+                                    })(<Input />)}
+                                </Form.Item>
+                                <Form.Item label="城市">
+                                    {getFieldDecorator('city',{
+                                        initialValue:authorInfo.city,
+                                        ...config
+                                    })(<Input />)}
+                                </Form.Item>
+                                <Form.Item label="联系方式">
+                                    {getFieldDecorator('contact',{
+                                        initialValue:authorInfo.contact,
+                                        ...config
+                                    })(<Input />)}
+                                </Form.Item>
+                                <Form.Item label="个人技能">
+                                    {getFieldDecorator('skill',{
+                                        initialValue:authorInfo.skill,
+                                        ...config
+                                    })(<TextArea rows={4} />)}
+                                </Form.Item>
+                                <Form.Item label="其它">
+                                    {getFieldDecorator('other',{
+                                        initialValue:authorInfo.other,
+                                        ...config
+                                    })(<TextArea rows={4} />)}
+                                </Form.Item>
+                            </section>
+                            <Divider type="vertical" style={{height:'100vh'}} />
+                            <section>
+                                <Form.Item label="Upload">
+                                    {getFieldDecorator('upload', {
+                                        valuePropName: 'fileList',
+                                        getValueFromEvent: this.normFile
+                                    })(
+                                        <Upload
+                                            name="logo"
+                                            listType="picture-card"
+                                            showUploadList={false}
+                                            className="avatar-uploader"
+                                            beforeUpload={beforeUpload}
+                                            onChange={this.handleChange}
+                                        >
 
-                                        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                                            {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
 
-                                    </Upload>,
-                                )}
-                            </Form.Item>
-                        </section>
-                    </div>
-                    <Form.Item {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit">
-                            保存
-                        </Button>
-                    </Form.Item>
-                </Form>
+                                        </Upload>,
+                                    )}
+                                </Form.Item>
+                            </section>
+                        </div>
+                        <Form.Item {...tailFormItemLayout}>
+                            <Button type="primary" htmlType="submit">
+                                保存
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Card>
             </div>
         );
     }

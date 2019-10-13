@@ -56,7 +56,7 @@ function App() {
                   )} />
               </Switch>
               </Suspense>
-          </HashRouter>
+          </HashRouter> 
       </Provider>
 
   );

@@ -5,7 +5,7 @@ import UserInfo from './userInfo'
 import HeaderLogo from './headerLogo'
 import MiniNav from './miniNav'
 import './index.less'
-import {Layout, Row, Col, Icon, Drawer} from 'antd'
+import {Layout, Row, Col} from 'antd'
 
 const { Header} = Layout;
 const navList = [
@@ -38,7 +38,7 @@ const NathanHeader = ()=>{
     const responsiveRight =   {xxl: 4, xl: 5, lg: 6, md:6,sm: 7, xs: 7 };
     const rightFlag =         {xxl: 4, xl: 3, lg: 1, md:1,sm: 1, xs: 1}
     return(
-        <Header className="header-contaienr">
+        <Header id="header-contaienr">
             <Row>
                 <Col {...leftFlag}/>
                 <Col {...responsiveLeft}>

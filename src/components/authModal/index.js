@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Modal, Input, Icon, Button, Form, Row, Col,message} from 'antd'
 import {connect} from "react-redux";
 import {login, register} from '@/store/user/actions'
-import {loginModalVisible, registerModalVisible} from '@/store/common/reducer'
+
 import {closeAuthModal} from '@/store/common/actions'
 import {getCode} from '@/request/request'
 import './index.less'

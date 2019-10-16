@@ -3,19 +3,13 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import {Provider} from 'react-redux'
 import store from '@/store'
 import { Spin } from 'antd';
-import AuthorizedRoute from './AuthorizedRoute'
-import AddArticle from "@/pages/admin/article/edit/edit";
-import Manage from "@/pages/admin/article/manage/manage";
-import SettingUp from "@/pages/admin/user/settingUp/settingUp";
-import MyUser from "@/pages/admin/user/myUser/myUser";
-const Index = lazy(()=> import('@/pages/web/index/index'));
-const Admin = lazy(()=> import('./pages/admin/home/aHome'));
-const aLogin = lazy(()=> import('./pages/admin/login/aLogin'));
 
-const Archives = lazy(() => import('@/pages/web/archives/archives'))
-const Home = lazy(() => import('@/pages/web/home/home'))
-const Article = lazy(() => import('@/pages/web/article/article'))
-const About = lazy(() => import('@/pages/web/about/about'))
+const Index = lazy(()=> import('@/pages/index/index'));
+
+const Archives = lazy(() => import('@/pages/archives/archives'))
+const Home = lazy(() => import('@/pages/home/home'))
+const Article = lazy(() => import('@/pages/article/article'))
+const About = lazy(() => import('@/pages/about/about'))
 
 
 function loading() {
@@ -31,18 +25,6 @@ function App() {
           <HashRouter forceRefresh={true}>
               <Suspense fallback={loading()}>
               <Switch>
-                  {/*<Route path='/admin'  component={Admin} />*/}
-                  <AuthorizedRoute path='/admin' linkType={'admin'} render={()=>(
-                      <Admin>
-                          <Switch>
-                              <Route path='/admin/article/edit' component={AddArticle} />
-                              <Route path='/admin/article/manage' component={Manage} />
-                              <Route path='/admin/user/settingUp' component={SettingUp} />
-                              <Route path='/admin/user/myUser' component={MyUser} />
-                          </Switch>
-                      </Admin>
-                  )} />
-                  <Route path='/login' component={aLogin} />
                   {/*<Route path='/' component={Index} />*/}
                   <Route path='/' render={()=>(
                       <Index>

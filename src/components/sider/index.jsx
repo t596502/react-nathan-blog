@@ -42,7 +42,7 @@ class BolgSider extends Component {
                     <ul className="recent-list">
                         {hotList.length ? hotList.map((item, index) => {
                             return (index < 5 &&
-                                <li onClick={() => this.props.jumpTo(item.id)} key={item.created_at}>
+                                <li onClick={(e) => this.props.jumpTo(item.id,e)} key={item.created_at}>
                                     <a href="javascript:;">{item.title}</a>
                                 </li>
                             )

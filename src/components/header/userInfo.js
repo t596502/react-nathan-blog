@@ -8,7 +8,7 @@ import AuthorAvatar from '../authorAvatar/authorAvatar'
 
 @connect(
     state=>({
-        username:state.user.username,
+        expire:state.user.setTime,
         authorInfo:state.user.authorInfo,
         auth:state.user.auth,
         windowWidth:state.common.windowWidth,
@@ -38,7 +38,7 @@ class UserInfo extends Component{
 
         return(
             <div>
-                {!username ? (
+                {!username? (
                     <div>
                         <div id="user-info">
                             <div className="login">

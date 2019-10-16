@@ -8,6 +8,7 @@ export const login = (params) => {
         return api.login(params).then(res => {
             const {data, code} = res;
             if (code === 0) {
+                data.setTime = new Date().getTime()
                 store.set('userInfo', data)
                 dispatch({
                     type: CONSTANTS.USER_LOGIN,

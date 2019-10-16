@@ -3,7 +3,7 @@ import {message} from 'antd'
 import store from 'store'
 import { Base64 } from 'js-base64';
 import {logout} from '@/store/user/actions'
-import {openAuthModal} from '@/store/common/actions'
+// import {openAuthModal} from '@/store/common/actions'
 import reduxAction from '@/store'
 import config from '@/config'
 
@@ -12,6 +12,7 @@ const instance = axios.create({
     timeout:20000
 });
 let timer;
+
 //拦截请求
 instance.interceptors.request.use(
     config => {
@@ -51,6 +52,7 @@ instance.interceptors.response.use(
                         break
                     case 401:
                         localStorage.clear()
+                        
                         message.error('登录信息过期或未授权，请重新登录！')
                         break
                     case 403:

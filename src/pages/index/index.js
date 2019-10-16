@@ -1,15 +1,15 @@
 import React, {Component, lazy, Suspense} from 'react'
-import {Route, Switch} from 'react-router-dom'
 import {Layout, Spin} from 'antd';
 import {connect} from "react-redux";
 import './index.less'
-import Headernav from '@/components/web/header'
+// import Headernav from '@/components/header'
 import {setWindowWidth} from '@/store/common/actions'
 import {getAuthorInfo} from '@/store/user/actions'
 import {throttle} from '@/lib/utils'
 
-const AuthModal = lazy(() => import('@/components/web/authModal'))
 
+const AuthModal = lazy(() => import('@/components/authModal'))
+const Headernav = lazy(()=> import('@/components/header')) 
 
 function loading() {
     return (

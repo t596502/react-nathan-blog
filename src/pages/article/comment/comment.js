@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import AuthorAvatar from '@/components/web/authorAvatar/authorAvatar'
+import AuthorAvatar from '@/components/authorAvatar/authorAvatar'
 
 import {Comment, Avatar, Form, Button, Input, message} from 'antd';
 import moment from 'moment';
@@ -12,6 +12,8 @@ import './comment.less'
 
 const {TextArea} = Input;
 const COMMENT = 'comment', REPLY = 'reply'
+const REPLY_STYLE1={width:'100%',display:'block',color:'#1890ff'}
+const REPLY_STYLE2={color: '#1890ff', fontSize: '1rem', margin: '0 3px'}
 
 const CommentList = ({children, comments, openReply, commentsId, replyChange, replyContent, replySubmit, replyId, renderAvatar}) => {
     function handleClick() {
@@ -23,12 +25,12 @@ const CommentList = ({children, comments, openReply, commentsId, replyChange, re
     return (
         <Comment
             key={comments.id || comments.replyId}
-            actions={[<a style={{width:'100%',display:'block'}} onClick={() => handleClick()}>回复</a>]}
+            actions={[<span style={REPLY_STYLE1} onClick={() => handleClick()}>回复</span>]}
             author={<div style={{fontSize: '0.9rem'}}>
                 {comments.parentAuthor ? (
                     <div>
                         <span>{comments.author}</span>
-                        <span style={{color: '#1890ff', fontSize: '1rem', margin: '0 3px'}}>@</span>
+                        <span style={REPLY_STYLE2}>@</span>
                         <span>{comments.parentAuthor}</span>
                     </div>
                 ) : <span>{comments.author}</span>}
@@ -110,7 +112,7 @@ class NathanComment extends Component {
             return(
                 <AuthorAvatar />
             )
-        }else {
+        }else if(author) {
             return(
                 <Avatar
                     className="user-avatar"
@@ -238,7 +240,7 @@ class NathanComment extends Component {
             content: this.state.value
         };
         api.commentsAdd(params).then(res => {
-            const {data, code, msg: errorMsg} = res
+            const {code, msg: errorMsg} = res
             if (code === 0) {
                 this.setState({
                     submitting: false,

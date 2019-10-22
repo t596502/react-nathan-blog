@@ -1,13 +1,16 @@
-import {Divider, Icon,Tag} from "antd";
+import {Divider, Icon,Tag,Skeleton} from "antd";
 import React from "react";
 import moment from 'moment'
 
 
 function ArticleList(props){
         return(
+
             <ul className="ul-list">
+
                 {props.list.map(item => (
                     <li key={item.id} className="ul-list-item" onClick={(e) => props.jumpTo(item.id,e)}>
+                      <Skeleton loading={props.skeletonLoading}>
                         <div className='label'>
                             <span className='label-c'>分类</span>
                             <span className='label-con' onClick={(e)=>props.categoryTo(item.category[0].name,e)}>{item.category[0].name}</span>
@@ -44,6 +47,7 @@ function ArticleList(props){
                                 <span className="nums">{item.comment_nums}</span>
                             </div>
                         </div>
+                   </Skeleton>
                     </li>
                 ))}
             </ul>

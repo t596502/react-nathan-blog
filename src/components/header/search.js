@@ -13,6 +13,7 @@ class Search extends Component{
     onBlur = (e)=>{
     };
     handlePressEnter =()=>{
+      console.log(5555)
         const {keyword} = this.state
         if(keyword) this.props.history.push(`/?page=1&title=${keyword}`)
         else this.props.history.push(`/`)

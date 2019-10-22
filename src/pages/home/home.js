@@ -1,22 +1,23 @@
-import React, { Component, Fragment, lazy, Suspense } from 'react'
+import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Layout, Row, Col, Empty, Spin } from 'antd';
-// import ArticleList from '@/components/list/list';
+import ArticleList from '@/components/list/list';
 import InfiniteScroll from 'react-infinite-scroller'
 import Sider from '@/components/sider'
 // import {articleList,getCategoryList} from '@/request/request'
 import * as api from '@/request/request'
 import { decodeQuery } from '@/lib'
+import { debounce } from '@/lib/utils'
 import './index.less'
 import { connect } from "react-redux";
 const rightFlag = { xxl: 4, xl: 3, lg: 1, md: 1, sm: 1, xs: 0 };
 const responsiveContent = { xxl: 12, xl: 13, lg: 17, md: 16, sm: 22, xs: 24 };
 const responsiveArticle = { xxl: 4, xl: 5, lg: 5, md: 6, sm: 0, xs: 0 };
 const leftFlag = { xxl: 4, xl: 3, lg: 1, md: 1, sm: 1, xs: 0 };
-const ArticleList = lazy(() => import('@/components/list/list'))
 
 
-const pageSize = 5
+
+const pageSize = 8
 
 const NoDataDesc = () => (
   <Fragment>
@@ -37,7 +38,8 @@ class Home extends Component {
     hotList: [],
     loading: false,
     hasMore: true,
-    tagsList: []
+    tagsList: [],
+    skeletonLoading: false
   };
   currentPage = 1
   componentWillMount() {
@@ -46,13 +48,27 @@ class Home extends Component {
     if (!list.length) this.getArticleList();
     if (!hotList.length) this.getHotArticleList();
     if (!tagsList.length) this.getTagsList()
+    console.log('componentWillMount')
   }
   componentWillReceiveProps(nextProps) {
-    this.currentPage = 1
-    this.query = decodeQuery(nextProps.location.search)
-    this.getArticleList()
+    if (this.props.location.search && this.props.location.search !== nextProps.location.search) {
+      this.currentPage = 1
+      this.query = decodeQuery(nextProps.location.search)
+      this.getArticleList()
+    }
+
   }
-  getArticleList(isMore) {
+  getArticleList = debounce((isMore) => {
+    if (isMore) {// 显示上拉加载loading
+      setTimeout(() => {
+        this.setState({
+          loading: false
+        });
+      }, 1000)
+    } else { // 骨架屏
+      this.setState({ skeletonLoading: true });
+    }
+
     let params = {
       pageSize,
       page: this.currentPage
@@ -62,17 +78,21 @@ class Home extends Component {
       Object.assign(params, this.query)
       // delete params.
     }
+    if (params.title) {
+      params.title = decodeURI(params.title)
+    }
     api.articleList(params).then(res => {
-      setTimeout(() => {
-        if (isMore) {
-          this.setState({
-            loading: false
-          });
-        }
-      }, 2000)
+      if (!isMore) { //
+        setTimeout(() => {
+          this.setState({ skeletonLoading: false });
+        }, 1000)
+      }
 
       const { code, data } = res
+
+
       if (code === 0) {
+
         const list = data.rows;
         this.setState({
           hasMore: list.length === pageSize
@@ -90,7 +110,7 @@ class Home extends Component {
         ++this.currentPage
       }
     })
-  }
+  }, 100)
   getHotArticleList() {
     api.articleList({ is_hot: 1 }).then(res => {
       const { code, data } = res
@@ -140,7 +160,7 @@ class Home extends Component {
     })
   }
   render() {
-    const { list, hotList, tagsList } = this.state;
+    const { list, hotList, tagsList, skeletonLoading } = this.state;
     const { authorInfo } = this.props
     return (
       <Layout style={{ height: 'calc(100vh - 64px)', overflowY: 'auto' }}>
@@ -148,15 +168,21 @@ class Home extends Component {
           initialLoad={false}
           pageStart={0}
           loadMore={this.handleInfiniteOnLoad}
-          hasMore={!this.state.loading && this.state.hasMore}
+          hasMore={!this.state.loading && this.state.hasMore && list.length}
           useWindow={false}
         >
           <Row type='flex' justify='space-around'>
             <Col {...leftFlag} />
             <Col {...responsiveContent} className="content-inner-wrapper home">
-              <Suspense fallback={<Spin />}>
-                <ArticleList list={list} categoryTo={this.categoryTo} tagsTo={this.tagsTo} jumpTo={this.jumpTo} />
-              </Suspense>
+              <ArticleList
+                skeletonLoading={skeletonLoading}
+                list={list}
+                categoryTo={this.categoryTo}
+                tagsTo={this.tagsTo}
+                jumpTo={this.jumpTo} />
+
+
+
 
               {this.state.loading && (
                 <div className="demo-loading-container">

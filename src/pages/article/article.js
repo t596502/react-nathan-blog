@@ -6,7 +6,7 @@ import Comment from './comment/comment'
 import Navigation from './navigation'
 import { openAuthModal } from '@/store/common/actions'
 import * as api from "@/request/request";
-// import {translateMarkdown} from "@/lib";
+import {translateMarkdown} from "@/lib";
 import CONFIG from '@/config'
 import './article.less';
 
@@ -23,18 +23,19 @@ class Article extends Component {
   state = {
     detail: {},
     likeStatus: false,
-    targetOffset: 10
+    targetOffset: 10,
+
   };
 
   componentWillMount() {
-    import('@/lib').then(({ translateMarkdown }) => {
-      
+
+    
       const id = this.props.match.params.id
-      this.getArticleDetail(id,translateMarkdown)
+      this.getArticleDetail(id)
       if (this.props.username) {
         this.getArticleLikeStatus(id)
       }
-    })
+
 
   }
   getArticleLikeStatus(id) {
@@ -50,7 +51,7 @@ class Article extends Component {
 
     })
   }
-  getArticleDetail(id,translateMarkdown) {
+  getArticleDetail(id) {
     api.articleDetail({ id }).then(res => {
       const { code, msg, data } = res;
       if (code === 0) {
@@ -58,7 +59,7 @@ class Article extends Component {
         data.contentLength = data.content.length
         data.category = data.category[0].name
         this.setState({
-          detail: data
+          detail: data,
         })
       } else {
         message.error(msg)
@@ -114,7 +115,8 @@ class Article extends Component {
         <Row >
           <Col {...CONFIG.LAYOUT_HOME}>{detail.id && (
             <div className="article-wrapper">
-              <header className="title">
+
+                <header className="title">
                 <Title >{detail.title}</Title>
                 <div className="title-header">
                   {/*<Avatar size="large" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{username}</Avatar>*/}
@@ -155,9 +157,11 @@ class Article extends Component {
                 </div>
 
               </header>
-
               <div className="article-detail" dangerouslySetInnerHTML={{ __html: detail.content }} />
 
+              
+              
+              
               <div className='like-wrapper'>
                 <div className={['article-like', likeStatus && 'flag'].join(' ')}
                   onClick={() => this.isLike(detail.id)}>

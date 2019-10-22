@@ -1,12 +1,10 @@
 // 截流
 export const debounce = (fn, delay, scope) => {
   let timer = null;
-  let count = 1;
   return function () {
     let context = scope || this,
       args = arguments;
     clearTimeout(timer);
-    console.log(Date.now(), ", 触发第", count++, "次滚动事件！");
     timer = setTimeout(function () {
       fn.apply(context, args);
     }, delay);

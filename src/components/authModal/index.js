@@ -6,7 +6,8 @@ import {login, register} from '@/store/user/actions'
 import {closeAuthModal} from '@/store/common/actions'
 import {getCode} from '@/request/request'
 import './index.less'
-
+const LOGIN = 'login';
+const REGISTER = 'register'
 function hasErrors(fieldsError) {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
@@ -40,8 +41,8 @@ class LoginModel extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.loginModalVisible) return {type: 'login'}
-        if (nextProps.registerModalVisible) return {type: 'register'}
+        if (nextProps.loginModalVisible) return {type: LOGIN}
+        if (nextProps.registerModalVisible) return {type: REGISTER}
         return null
     }
     getCode = () =>{
@@ -82,7 +83,7 @@ class LoginModel extends Component {
                 this.setState({
                     btnLoading: true
                 });
-                if (type === 'login') {
+                if (type === LOGIN) {
                     Object.assign(values, {type: 101})
                 }
                 this.props[type](values).then(res => {
@@ -127,11 +128,11 @@ class LoginModel extends Component {
         const {type, btnLoading,countdown} = this.state
         const {loginModalVisible, registerModalVisible} = this.props
         const {getFieldDecorator, getFieldsError} = this.props.form;
-
+        const title = type === LOGIN ? '登录' :'注册'
 
         return (
             <Modal
-                title={type}
+                title={title}
                 width={320}
                 footer={null}
                 visible={loginModalVisible || registerModalVisible}

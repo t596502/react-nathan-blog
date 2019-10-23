@@ -85,7 +85,7 @@ class Home extends Component {
       if (!isMore) { //
         setTimeout(() => {
           this.setState({ skeletonLoading: false });
-        }, 1000)
+        }, 300)
       }
 
       const { code, data } = res

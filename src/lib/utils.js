@@ -1,4 +1,4 @@
-// 截流
+// 防抖
 export const debounce = (fn, delay, scope) => {
   let timer = null;
   return function () {
@@ -10,7 +10,7 @@ export const debounce = (fn, delay, scope) => {
     }, delay);
   }
 }
-// 点击防抖
+// 点击截流
 export const throttle = (func, delay) => {
   let prev = Date.now();
   return function () {

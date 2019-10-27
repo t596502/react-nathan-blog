@@ -58,7 +58,6 @@ class About extends Component {
                             }</Descriptions.Item>
                         ))}
                     </Descriptions>
-                    <Divider>关于博客</Divider>
                 </Col>
             </Row>
 

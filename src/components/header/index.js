@@ -19,11 +19,11 @@ const navList = [
         title: '归档',
         link: '/archives'
     },
-    {
-        icon: 'folder',
-        title: '项目',
-        link: '/categories'
-    },
+    // {
+    //     icon: 'folder',
+    //     title: '项目',
+    //     link: '/categories'
+    // },
     {
         icon: 'user',
         title: '关于',

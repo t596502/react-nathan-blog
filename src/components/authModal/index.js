@@ -6,6 +6,7 @@ import {login, register} from '@/store/user/actions'
 import {closeAuthModal} from '@/store/common/actions'
 import {getCode} from '@/request/request'
 import './index.less'
+import FakeTimers from '@jest/fake-timers/build/jestFakeTimers';
 const LOGIN = 'login';
 const REGISTER = 'register'
 function hasErrors(fieldsError) {
@@ -37,7 +38,7 @@ const FormItemLayout = {
 class LoginModel extends Component {
     constructor(props) {
         super(props);
-        this.state = {type: 'login',countdown:TIME} // 模态框类型
+        this.state = {type: 'login',countdown:TIME,githubLoginLoading:false} // 模态框类型
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -123,9 +124,17 @@ class LoginModel extends Component {
         }
     };
     handleClose = () => this.props.closeAuthModal(this.state.type)
-
+    githubLogin = ()=>{
+      this.setState({
+        githubLoginLoading:true
+      },()=>{
+window.location.href = 'https://github.com/login/oauth/authorize?client_id=d8b7cf9c850f8fa80ce9&redirect_uri=http://localhost:3000/oauth/redirect'
+      })
+      
+      
+    }
     render() {
-        const {type, btnLoading,countdown} = this.state
+        const {type, btnLoading,countdown,githubLoginLoading} = this.state
         const {loginModalVisible, registerModalVisible} = this.props
         const {getFieldDecorator, getFieldsError} = this.props.form;
         const title = type === LOGIN ? '登录' :'注册'
@@ -217,7 +226,14 @@ class LoginModel extends Component {
                             {type !== 'login' ? '注册' : '登录'}
                         </Button>
                     </div>
-
+                    <div style={{marginTop: '10px'}}>
+                        <Button block
+                          onClick={this.githubLogin}
+                          loading={githubLoginLoading}
+                        >
+                            github登录
+                        </Button>
+                    </div>
                 </Form>
             </Modal>
         )

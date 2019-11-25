@@ -3,13 +3,13 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from '@/store'
 import { Spin } from 'antd';
+import PageNotFound from '@/components/pageNotFound'
 
 const Index = lazy(() => import('@/pages/index/index'));
 const Archives = lazy(() => import('@/pages/archives/archives'))
 const Home = lazy(() => import('@/pages/home/home'))
 const Article = lazy(() => import('@/pages/article/article'))
 const About = lazy(() => import('@/pages/about/about'))
-const PageNotFound = lazy(() => import('@/components/pageNotFound'))
 
 function loading() {
   return (

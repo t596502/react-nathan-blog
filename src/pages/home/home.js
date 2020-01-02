@@ -10,6 +10,7 @@ import { decodeQuery } from '@/lib'
 import { debounce } from '@/lib/utils'
 import './index.less'
 import { connect } from "react-redux";
+const {Footer} = Layout
 const rightFlag = { xxl: 4, xl: 3, lg: 1, md: 1, sm: 1, xs: 0 };
 const responsiveContent = { xxl: 12, xl: 13, lg: 17, md: 16, sm: 22, xs: 24 };
 const responsiveArticle = { xxl: 4, xl: 5, lg: 5, md: 6, sm: 0, xs: 0 };
@@ -168,7 +169,7 @@ class Home extends Component {
           initialLoad={false}
           pageStart={0}
           loadMore={this.handleInfiniteOnLoad}
-          hasMore={!this.state.loading && this.state.hasMore && list.length}
+          hasMore={!!(!this.state.loading && this.state.hasMore && list.length)}
           useWindow={false}
         >
           <Row type='flex' justify='space-around'>
@@ -205,6 +206,7 @@ class Home extends Component {
             <Col {...rightFlag} />
           </Row>
         </InfiniteScroll>
+        <Footer style={{textAlign:'center'}}><a style={{color:'#666666'}} target='_blank' href="http://beian.miit.gov.cn">粤ICP备19067013号</a></Footer>
       </Layout>
     )
   }

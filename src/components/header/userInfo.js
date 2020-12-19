@@ -11,6 +11,7 @@ import AuthorAvatar from '../authorAvatar/authorAvatar'
         expire:state.user.setTime,
         authorInfo:state.user.authorInfo,
         auth:state.user.auth,
+        username:state.user.username,
         windowWidth:state.common.windowWidth,
         colorMap: state.common.colorMap
     }),
@@ -35,7 +36,6 @@ class UserInfo extends Component{
 
     render() {
         const {username,windowWidth,auth,colorMap} = this.props;
-
         return(
             <div>
                 {!username? (
